@@ -13,5 +13,7 @@
   <mapping class="entities.Plan"/>
   <mapping class="entities.Day"/>
   <mapping class="entities.User"/>
+  <mapping class="entities.SetInfo"/>
+  <mapping class="entities.DAY_EXERCISES"/>
  </session-factory>
 </hibernate-configuration>

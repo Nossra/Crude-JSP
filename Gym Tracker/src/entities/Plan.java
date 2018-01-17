@@ -22,7 +22,7 @@ public class Plan {
 	private User users;
 	
 	@OneToMany
-	@JoinColumn(name = "day_id")
+	@JoinColumn(name = "plan_id")
 	private List<Day> days;
 	
 	public Plan() {
