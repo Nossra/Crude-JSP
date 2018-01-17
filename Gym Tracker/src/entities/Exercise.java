@@ -63,6 +63,7 @@ public class Exercise {
 		VADER,
 		BICEPS,
 		TRICEPS,
-		MAGE
+		MAGE,
+		RYGG
 	}	
 }

@@ -17,7 +17,7 @@ public class Plan {
 	private int id;
 	private String name;
 	private int timesPerWeek;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="user_id")	
 	private User users;
 	

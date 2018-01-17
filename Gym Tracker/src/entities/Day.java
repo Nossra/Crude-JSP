@@ -10,11 +10,13 @@ public class Day {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private int dayNr;
+	private String name;
 		
 	public Day() {}
 	
-	public Day(int nrOfDays) {
-		this.setNrOfDays(nrOfDays);
+	public Day(int dayNr, String name) {
+		this.setNrOfDays(dayNr);
+		this.setName(name);
 	}
 	
 	public int getId() {
@@ -30,6 +32,14 @@ public class Day {
 
 	public void setNrOfDays(int dayNr) {
 		this.dayNr = dayNr;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }
