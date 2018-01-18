@@ -4,6 +4,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.Session;
+
+import utilities.HibernateUtil;
+
 @Entity
 public class User {
 	@Id
@@ -42,5 +46,12 @@ public class User {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+	
+	public static void saveUser(User obj) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		session.save(obj);
+		session.getTransaction().commit();
 	}
 }

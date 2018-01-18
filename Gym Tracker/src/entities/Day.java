@@ -14,9 +14,8 @@ public class Day {
 		
 	public Day() {}
 	
-	public Day(int dayNr, String name) {
+	public Day(int dayNr) {
 		this.setNrOfDays(dayNr);
-		this.setName(name);
 	}
 	
 	public int getId() {

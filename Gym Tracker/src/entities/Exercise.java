@@ -5,6 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.Session;
+
+import utilities.HibernateUtil;
+
 @Entity
 public class Exercise {
 	@Id
@@ -66,4 +70,11 @@ public class Exercise {
 		MAGE,
 		RYGG
 	}	
+	
+	public static void saveExercise(Exercise ex) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		session.save(ex);
+		session.getTransaction().commit();
+	}
 }

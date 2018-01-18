@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import utilities.EntityUtil;
+
 @Entity
 public class Plan {
 	@Id
@@ -19,11 +21,10 @@ public class Plan {
 	private int timesPerWeek;
 	@ManyToOne
 	@JoinColumn(name="user_id")	
-	private User users;
-	
+	private User users;	
 	@OneToMany
 	@JoinColumn(name = "plan_id")
-	private List<Day> days;
+	private List<Day> days = new ArrayList<Day>();
 	
 	public Plan() {
 		
@@ -33,7 +34,10 @@ public class Plan {
 		this.setName(name);
 		this.setTimesPerWeek(timesPerWeek);
 		this.setUsers(user);
-		days = new ArrayList<Day>();
+		for (int i = 0; i < timesPerWeek; i++) {
+			days.add(new Day(i+1));
+			EntityUtil.save(days.get(i));
+		}			
 	}
 	
 	public int getId() {
@@ -69,5 +73,20 @@ public class Plan {
 
 	public void setDays(List<Day> days) {
 		this.days = days;
-	}	
+	}
+	
+	//DONT USE YET, DEVELOP FURTHER AFTER JSP IS IN
+	public void createPlan(String name, int timesPerWeek, User user) {
+		Plan p = new Plan(name, timesPerWeek, user);
+		for (int i = 0; i < p.getDays().size(); i++) {
+			p.getDays().get(i).setNrOfDays(i+1);
+		}
+	}
+	
+	public void addExercise(Exercise exercise, int dayNr, double weight, int repetitions) {
+		SetInfo sets = new SetInfo(weight, repetitions);
+		EntityUtil.save(sets);
+		DAY_EXERCISES de = new DAY_EXERCISES(days.get(dayNr-1), exercise, sets);		
+		EntityUtil.save(de);		
+	}
 }
