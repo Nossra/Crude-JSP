@@ -45,6 +45,7 @@ public class App {
 		EntityUtil.save(p);
 		
 		//Add exercises with one set per row into a plan
+//		p.addExercise(exercise, dayNr, weight, repetitions);
 		p.addExercise(e, 1, 25, 6);
 		p.addExercise(e, 1, 22, 6);
 		p.addExercise(e, 1, 20, 6);
