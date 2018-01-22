@@ -28,22 +28,6 @@ public class App {
 
 	public static void main(String[] args) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-
-		
-<<<<<<< HEAD
-		//Add exercises with one set per row into a plan
-//		p.addExercise(exercise, dayNr, weight, repetitions);
-		p.addExercise(e, 1, 25, 6);
-		p.addExercise(e, 1, 22, 6);
-		p.addExercise(e, 1, 20, 6);
-=======
-		session.close();
->>>>>>> 11febe28820946cef786a84d00f7c623841d7372
-<<<<<<< HEAD
-=======
-		
-		
->>>>>>> 2c21fb7733684c8a8af01dc7b7cdf40c64d148c0
 		
 		Exercise.selectAll();
 //		Exercise e = new Exercise("Hantel Curl", Muscle.BICEPS, "Bicepsövning där man lyfter hantlar");
@@ -65,6 +49,7 @@ public class App {
 //		EntityUtil.save(p);
 //		
 //		//Add exercises with one set per row into a plan
+//		p.addExercise(exercise, dayNr, weight, repetitions);
 //		p.addExercise(e, 1, 25, 6);
 //		p.addExercise(e, 1, 22, 6);
 //		p.addExercise(e, 1, 20, 6);
@@ -88,6 +73,8 @@ public class App {
 //		p.addExercise(e3, 2, 80, 6);
 //		p.addExercise(e3, 2, 80, 5);
 //		p.addExercise(e3, 2, 80, 4);	
+		
+		session.close();
 		System.out.println("\nfinished");
 	}
 	
