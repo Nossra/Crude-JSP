@@ -1,9 +1,15 @@
 package entities;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 
@@ -71,10 +77,20 @@ public class Exercise {
 		RYGG
 	}	
 	
-	public static void saveExercise(Exercise ex) {
+	public static void selectAll() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		session.beginTransaction();
-		session.save(ex);
-		session.getTransaction().commit();
+
+		CriteriaBuilder cb = session.getCriteriaBuilder();
+		CriteriaQuery<Exercise> cq = cb.createQuery(Exercise.class);
+		Root<Exercise> exercise = cq.from(Exercise.class);
+		cq.select(exercise);
+		
+		TypedQuery<Exercise> q = session.createQuery(cq);
+		List<Exercise> exercises = q.getResultList();
+		
+		for (int i = 0; i < exercises.size(); i++) {
+			System.out.println(exercises.get(i).getName());
+		}
+		session.close();
 	}
 }
