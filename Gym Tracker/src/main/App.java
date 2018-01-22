@@ -39,6 +39,11 @@ public class App {
 =======
 		session.close();
 >>>>>>> 11febe28820946cef786a84d00f7c623841d7372
+<<<<<<< HEAD
+=======
+		
+		
+>>>>>>> 2c21fb7733684c8a8af01dc7b7cdf40c64d148c0
 		
 		Exercise.selectAll();
 //		Exercise e = new Exercise("Hantel Curl", Muscle.BICEPS, "Bicepsövning där man lyfter hantlar");
