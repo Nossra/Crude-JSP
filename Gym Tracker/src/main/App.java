@@ -30,9 +30,15 @@ public class App {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 
 		
+<<<<<<< HEAD
+		//Add exercises with one set per row into a plan
+//		p.addExercise(exercise, dayNr, weight, repetitions);
+		p.addExercise(e, 1, 25, 6);
+		p.addExercise(e, 1, 22, 6);
+		p.addExercise(e, 1, 20, 6);
+=======
 		session.close();
-		
-		
+>>>>>>> 11febe28820946cef786a84d00f7c623841d7372
 		
 		Exercise.selectAll();
 //		Exercise e = new Exercise("Hantel Curl", Muscle.BICEPS, "Bicepsövning där man lyfter hantlar");
