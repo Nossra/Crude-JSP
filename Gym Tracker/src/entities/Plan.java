@@ -15,6 +15,7 @@ import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import utilities.EntityUtil;
 import utilities.HibernateUtil;
@@ -99,21 +100,24 @@ public class Plan {
 	
 	public static void selectPlanInfo() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-
-		 CriteriaBuilder cb = session.getCriteriaBuilder();
-
-		  CriteriaQuery<Plan> q = cb.createQuery(Plan.class);
-		  Root<Plan> c = q.from(Plan.class);
-		  ParameterExpression<Integer> p = cb.parameter(Integer.class);
-		  q.select(c).where(cb.gt(c.get("timesPerWeek"), p));
-		  
-		  TypedQuery<Plan> query = session.createQuery(q);
-		  query.setParameter(p, 1);
-		  List<Plan> results = query.getResultList();
-		session.close();
+		String hql = 
+				"SELECT p.name, d.dayNr, e.name, si.weight, si.repetitions "
+				+"FROM Plan p, Day d, DAY_EXERCISES de, SetInfo si, Exercise e "
+				+"WHERE p.id=d.id AND d.id=de.id "
+				+"AND de.id=si.id AND e.id=de.id AND d.dayNr = :id";
+		List result = session.createQuery(hql)
+		.setParameter("id", 2)
+		.list();
 		
-		for (Plan plan : results) {
-			System.out.println(plan.getName());
-		}
+//		for (int i = 0; i < result.size(); i++) {
+//			if (result.get(i) instanceof Plan) {
+//				System.out.print((Plan) result.get(i).getName() + " ");
+//			} else if(result.get(i) instanceof Day) {
+//				System.out.print(((Day) result).getNrOfDays() + " ");
+//			}
+//		}
+		
+		
+		session.close();
 	}
 }
