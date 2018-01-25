@@ -29,51 +29,49 @@ public class App {
 	public static void main(String[] args) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		
-		Plan.selectPlanInfo();
 //		Exercise.selectAll();
-//		Exercise e = new Exercise("Hantel Curl", Muscle.BICEPS, "Bicepsövning där man lyfter hantlar");
-//		Exercise e1 = new Exercise("Bänkpress", Muscle.BRÖST, "Bröstövning");
-//		Exercise e2 = new Exercise("Skivstångs rodd", Muscle.RYGG, "Bröstövning stående");
-//		Exercise e3 = new Exercise("Knäböj", Muscle.LÅR, "Tung basövning för ben som träffar större delar utav kroppen");
-//		Exercise e4 = new Exercise("Plankan", Muscle.MAGE, "Magövning för statisk träning");
-//		
-//		User martin = new User("Martin", "Nosslin", "1234");
-//		
-//		Plan p = new Plan("Get ripped", 3, martin);
-//		
-//		EntityUtil.saveAll(e, e1, e2, e3, e4);
-//		 
-////		user
-//		EntityUtil.save(martin);
-//
-////		workoutplan
-//		EntityUtil.save(p);
-//		
-////		Add exercises with one set per row into a plan
-////		p.addExercise(exercise, dayNr, weight, repetitions);
-//		p.addExercise(e, 1, 25, 6);
-//		p.addExercise(e, 1, 22, 6); 
-//		p.addExercise(e, 1, 20, 6);
-//		
-//		p.addExercise(e1, 1, 70, 6);
-//		p.addExercise(e1, 1, 70, 5);
-//		p.addExercise(e1, 1, 65, 7);
-//		
-//		p.addExercise(e3, 1, 80, 6);
-//		p.addExercise(e3, 1, 80, 5);
-//		p.addExercise(e3, 1, 80, 4);
-//		
-//		p.addExercise(e2, 2, 60, 8);
-//		p.addExercise(e2, 2, 65, 7);
-//		p.addExercise(e2, 2, 60, 6);
-//		
-//		p.addExercise(e4, 2, 70, 6);
-//		p.addExercise(e4, 2, 70, 5);
-//		p.addExercise(e4, 2, 65, 7);
-//		
-//		p.addExercise(e3, 2, 80, 6);
-//		p.addExercise(e3, 2, 80, 5);
-//		p.addExercise(e3, 2, 80, 4);	
+		Exercise e = new Exercise("Hantel Curl", Muscle.BICEPS, "Bicepsövning där man lyfter hantlar");
+		Exercise e1 = new Exercise("Bänkpress", Muscle.BRÖST, "Bröstövning");
+		Exercise e2 = new Exercise("Skivstångs rodd", Muscle.RYGG, "Bröstövning stående");
+		Exercise e3 = new Exercise("Knäböj", Muscle.LÅR, "Tung basövning för ben som träffar större delar utav kroppen");
+		Exercise e4 = new Exercise("Plankan", Muscle.MAGE, "Magövning för statisk träning");
+		
+		User martin = new User("Martin", "Nosslin", "1234");
+		
+//		Plan p1 = new Plan("Get ripped", 3, martin);
+		Plan p2 = new Plan("Get swole", 2, martin);
+
+		EntityUtil.saveAll(e, e1, e2, e3, e4);
+
+		EntityUtil.save(martin);
+
+		EntityUtil.save(p2);
+	
+//		Add exercises with one set per row into a plan
+//		p.addExercise(exercise, dayNr, weight, repetitions);
+		p2.addExercise(e2, 1, 56, 5);
+		p2.addExercise(e2, 1, 98, 6); 
+		p2.addExercise(e2, 1, 58, 3);
+		
+		p2.addExercise(e3, 1, 45, 6);
+		p2.addExercise(e3, 1, 78, 5);
+		p2.addExercise(e3, 1, 64, 7);
+		
+		p2.addExercise(e1, 1, 34, 6);
+		p2.addExercise(e1, 1, 45, 5);
+		p2.addExercise(e1, 1, 12, 4);
+		
+		p2.addExercise(e4, 2, 20, 8);
+		p2.addExercise(e4, 2, 50, 7);
+		p2.addExercise(e4, 2, 10, 6);
+		
+		p2.addExercise(e1, 2, 20, 6);
+		p2.addExercise(e1, 2, 67, 5);
+		p2.addExercise(e1, 2, 10, 7);
+		
+		p2.addExercise(e2, 2, 12, 6);
+		p2.addExercise(e2, 2, 30, 5);
+		p2.addExercise(e2, 2, 55, 4);	
 		
 		session.close();
 		System.out.println("\nfinished");

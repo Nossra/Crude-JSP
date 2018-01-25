@@ -1,4 +1,5 @@
 package entities;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
@@ -13,12 +14,14 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
+import javax.security.auth.login.CredentialExpiredException;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import utilities.EntityUtil;
 import utilities.HibernateUtil;
+import viewmodel.PlanInfoViewModel;
 
 @Entity
 public class Plan {
@@ -37,7 +40,9 @@ public class Plan {
 	public Plan() {
 		
 	}
-	
+	public Plan(String name) {
+		this.name = name;
+	}
 	public Plan(String name, int timesPerWeek, User user) {
 		this.setName(name);
 		this.setTimesPerWeek(timesPerWeek);
@@ -83,41 +88,53 @@ public class Plan {
 		this.days = days;
 	}
 	
-	//DONT USE YET, DEVELOP FURTHER AFTER JSP IS IN
-//	public void createPlan(String name, int timesPerWeek, User user) {
-//		Plan p = new Plan(name, timesPerWeek, user);
-//		for (int i = 0; i < p.getDays().size(); i++) {
-//			p.getDays().get(i).setNrOfDays(i+1);
-//		}
-//	}
-	
 	public void addExercise(Exercise exercise, int dayNr, double weight, int repetitions) {
 		SetInfo sets = new SetInfo(weight, repetitions);
 		EntityUtil.save(sets);
 		DAY_EXERCISES de = new DAY_EXERCISES(days.get(dayNr-1), exercise, sets);		
-		EntityUtil.save(de);		
+		EntityUtil.save(de);
+		
 	}
 	
-	public static void selectPlanInfo() {
+	public void selectFullPlanInfo() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		String hql = 
-				"SELECT p.name, d.dayNr, e.name, si.weight, si.repetitions "
-				+"FROM Plan p, Day d, DAY_EXERCISES de, SetInfo si, Exercise e "
-				+"WHERE p.id=d.id AND d.id=de.id "
-				+"AND de.id=si.id AND e.id=de.id AND d.dayNr = :id";
-		List result = session.createQuery(hql)
-		.setParameter("id", 2)
-		.list();
+		String hql = "SELECT new viewmodel.PlanInfoViewModel(p.name, d.dayNr, e.name, si.weight, si.repetitions) "
+					+"FROM Day d, SetInfo si, DAY_EXERCISES de, Exercise e, Plan p "
+					+"WHERE de.day=d.id AND e.id=de.exercises AND si.id=de.sets AND p.name = '" + this.getName() + "'";
+		@SuppressWarnings("unchecked")
+		List<PlanInfoViewModel> result = (List<PlanInfoViewModel>) session.createQuery(hql).list();
+
+		for (int i = 0; i < result.size(); i++) {
+			PlanInfoViewModel vm = result.get(i);
+			Plan p = new Plan(vm.getPlanName());
+			Day d = new Day(vm.getDayNr());
+			Exercise e = new Exercise(vm.getExerciseName());
+			SetInfo siWeight = new SetInfo(vm.getWeight(), vm.getRepetitions());
+			
+			System.out.println(p.getName() + " " + d.getDayNr() + " " + e.getName() + " " + siWeight.getWeight() + " " + siWeight.getRepetitions());
+		}
+		session.close();
+	}
+	
+	public void selectPlanDayInfo(int day) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		String hql = "SELECT new viewmodel.PlanInfoViewModel(p.name, d.dayNr, e.name, si.weight, si.repetitions) "
+					+"FROM Day d, SetInfo si, DAY_EXERCISES de, Exercise e, Plan p "
+					+"WHERE de.day=d.id AND e.id=de.exercises AND si.id=de.sets AND d.dayNr = :dayNr AND p.name = '" + this.getName() + "'";
+		@SuppressWarnings("unchecked")
+		List<PlanInfoViewModel> result = (List<PlanInfoViewModel>) session.createQuery(hql)
+				.setParameter("dayNr", day)
+				.list();		
 		
-//		for (int i = 0; i < result.size(); i++) {
-//			if (result.get(i) instanceof Plan) {
-//				System.out.print((Plan) result.get(i).getName() + " ");
-//			} else if(result.get(i) instanceof Day) {
-//				System.out.print(((Day) result).getNrOfDays() + " ");
-//			}
-//		}
-		
-		
+		for (int i = 0; i < result.size(); i++) {
+			PlanInfoViewModel vm = result.get(i);
+			Plan p = new Plan(vm.getPlanName());
+			Day d = new Day(vm.getDayNr());
+			Exercise e = new Exercise(vm.getExerciseName());
+			SetInfo siWeight = new SetInfo(vm.getWeight(), vm.getRepetitions());
+			
+			System.out.println(p.getName() + " " + d.getDayNr() + " " + e.getName() + " " + siWeight.getWeight() + " " + siWeight.getRepetitions());
+		}
 		session.close();
 	}
 }

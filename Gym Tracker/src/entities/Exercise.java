@@ -27,7 +27,9 @@ public class Exercise {
 	public Exercise() {
 		
 	}
-	
+	public Exercise(String name) {
+		this.name = name;
+	}
 	public Exercise(String name, Muscle muscle, String description) {
 		this.setName(name);
 		this.setMuscle(muscle);
