@@ -1,24 +1,17 @@
 package entities;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.ParameterExpression;
-import javax.persistence.criteria.Root;
-import javax.security.auth.login.CredentialExpiredException;
-
 import org.hibernate.Session;
-import org.hibernate.query.Query;
-
 import utilities.EntityUtil;
 import utilities.HibernateUtil;
 import viewmodel.PlanInfoViewModel;
@@ -33,8 +26,7 @@ public class Plan {
 	@ManyToOne
 	@JoinColumn(name="user_id")	
 	private User users;	
-	@OneToMany
-	@JoinColumn(name = "plan_id")
+	@OneToMany(mappedBy = "plan", cascade = CascadeType.ALL)
 	private List<Day> days = new ArrayList<Day>();
 	
 	public Plan() {
