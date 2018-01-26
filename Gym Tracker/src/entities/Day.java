@@ -17,6 +17,11 @@ public class Day {
 		
 	public Day() {}
 	
+	public Day(int dayNr, Plan plan) {
+		this.setDayNr(dayNr);
+		this.setPlan(plan);
+	}
+	
 	public Day(int dayNr) {
 		this.setDayNr(dayNr);
 	}

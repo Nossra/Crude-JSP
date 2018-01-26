@@ -38,11 +38,7 @@ public class Plan {
 	public Plan(String name, int timesPerWeek, User user) {
 		this.setName(name);
 		this.setTimesPerWeek(timesPerWeek);
-		this.setUsers(user);
-		for (int i = 0; i < timesPerWeek; i++) {
-			days.add(new Day(i+1));
-			EntityUtil.save(days.get(i));
-		}			
+		this.setUsers(user);		
 	}
 	
 	public int getId() {
@@ -80,6 +76,17 @@ public class Plan {
 		this.days = days;
 	}
 	
+	public void savePlan() {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		session.save(this);
+		session.getTransaction().commit();		
+		for (int i = 0; i < this.getTimesPerWeek(); i++) {
+			days.add(new Day(i+1, this));
+			EntityUtil.save(days.get(i));
+		}	
+	}
+	
 	public void addExercise(Exercise exercise, int dayNr, double weight, int repetitions) {
 		SetInfo sets = new SetInfo(weight, repetitions);
 		EntityUtil.save(sets);
@@ -92,7 +99,7 @@ public class Plan {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		String hql = "SELECT new viewmodel.PlanInfoViewModel(p.name, d.dayNr, e.name, si.weight, si.repetitions) "
 					+"FROM Day d, SetInfo si, DAY_EXERCISES de, Exercise e, Plan p "
-					+"WHERE de.day=d.id AND e.id=de.exercises AND si.id=de.sets AND p.name = '" + this.getName() + "'";
+					+"WHERE de.day=d.id AND e.id=de.exercises AND si.id=de.sets AND p.id=d.plan AND p.name = '" + this.getName() + "'";
 		@SuppressWarnings("unchecked")
 		List<PlanInfoViewModel> result = (List<PlanInfoViewModel>) session.createQuery(hql).list();
 
@@ -108,11 +115,11 @@ public class Plan {
 		session.close();
 	}
 	
-	public void selectPlanDayInfo(int day) {
+	public void selectDayInfo(int day) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		String hql = "SELECT new viewmodel.PlanInfoViewModel(p.name, d.dayNr, e.name, si.weight, si.repetitions) "
 					+"FROM Day d, SetInfo si, DAY_EXERCISES de, Exercise e, Plan p "
-					+"WHERE de.day=d.id AND e.id=de.exercises AND si.id=de.sets AND d.dayNr = :dayNr AND p.name = '" + this.getName() + "'";
+					+"WHERE de.day=d.id AND e.id=de.exercises AND si.id=de.sets AND p.id=d.plan AND d.dayNr = :dayNr AND p.name = '" + this.getName() + "'";
 		@SuppressWarnings("unchecked")
 		List<PlanInfoViewModel> result = (List<PlanInfoViewModel>) session.createQuery(hql)
 				.setParameter("dayNr", day)
