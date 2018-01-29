@@ -79,7 +79,7 @@ public class Exercise {
 		RYGG
 	}	
 	
-	public static void selectAll() {
+	public static List<Exercise> selectAll() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 
 		CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -89,10 +89,8 @@ public class Exercise {
 		
 		TypedQuery<Exercise> q = session.createQuery(cq);
 		List<Exercise> exercises = q.getResultList();
+		return exercises;
+		//session.close();
 		
-		for (int i = 0; i < exercises.size(); i++) {
-			System.out.println(exercises.get(i).getName());
-		}
-		session.close();
 	}
 }

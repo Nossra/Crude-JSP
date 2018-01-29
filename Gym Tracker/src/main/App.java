@@ -29,86 +29,67 @@ public class App {
 	public static void main(String[] args) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		
-//		Exercise.selectAll();
-		Exercise e = new Exercise("Hantel Curl", Muscle.BICEPS, "Bicepsövning där man lyfter hantlar");
-		Exercise e1 = new Exercise("Bänkpress", Muscle.BRÖST, "Bröstövning");
-		Exercise e2 = new Exercise("Skivstångs rodd", Muscle.RYGG, "Bröstövning stående");
-		Exercise e3 = new Exercise("Knäböj", Muscle.LÅR, "Tung basövning för ben som träffar större delar utav kroppen");
-		Exercise e4 = new Exercise("Plankan", Muscle.MAGE, "Magövning för statisk träning");
+//		Exercise e = new Exercise("Hantel Curl", Muscle.BICEPS, "Bicepsövning där man lyfter hantlar");
+//		Exercise e1 = new Exercise("Bänkpress", Muscle.BRÖST, "Bröstövning");
+//		Exercise e2 = new Exercise("Skivstångs rodd", Muscle.RYGG, "Bröstövning stående");
+//		Exercise e3 = new Exercise("Knäböj", Muscle.LÅR, "Tung basövning för ben som träffar större delar utav kroppen");
+//		Exercise e4 = new Exercise("Plankan", Muscle.MAGE, "Magövning för statisk träning");
 		
 		User martin = new User("Martin", "Nosslin", "1234");
-		
 		Plan p1 = new Plan("Get ripped", 3, martin);
 		Plan p2 = new Plan("Get swole", 2, martin);
 		
-		System.out.println("plan 1, full info");
-		p1.selectFullPlanInfo();
-		System.out.println("\n");
-		System.out.println("plan 1, day 2");
-		p1.selectDayInfo(2);
-		
-		System.out.println("\n");
-		System.out.println("plan 2 day 1");
-		p2.selectDayInfo(1);
-
-//		p2.selectFullPlanInfo();
 //		EntityUtil.saveAll(e, e1, e2, e3, e4);
-////
 //		EntityUtil.save(martin);
-////
-//		p1.savePlan();
-//		p2.savePlan();
+//		EntityUtil.saveAll(p1, p2);
 		
-//		Add exercises with one set per row into a plan
-//		p.addExercise(exercise, dayNr, weight, repetitions);
-//		p1.addExercise(e2, 1, 56, 5);
-//		p1.addExercise(e2, 1, 98, 6); 
-//		p1.addExercise(e2, 1, 58, 3);
-//		
-//		p1.addExercise(e3, 1, 45, 6);
-//		p1.addExercise(e3, 1, 78, 5);
-//		p1.addExercise(e3, 1, 64, 7);
-//		
-//		p1.addExercise(e1, 1, 34, 6);
-//		p1.addExercise(e1, 1, 45, 5);
-//		p1.addExercise(e1, 1, 12, 4);
-//		
-//		p1.addExercise(e4, 2, 20, 8);
-//		p1.addExercise(e4, 2, 50, 7);
-//		p1.addExercise(e4, 2, 10, 6);
-//		
-//		p1.addExercise(e1, 2, 20, 6);
-//		p1.addExercise(e1, 2, 67, 5);
-//		p1.addExercise(e1, 2, 10, 7);
-//		
-//		p1.addExercise(e2, 2, 12, 6);
-//		p1.addExercise(e2, 2, 30, 5);
-//		p1.addExercise(e2, 2, 55, 4);	
+//		p1.addExercise(Exercise.selectAll().get(2), 1, 80, 5);
 		
+//		p1.addExercise(Exercise.selectAll().get(2), 1, 80, 4);
+//		p1.addExercise(Exercise.selectAll().get(2), 1, 75, 5);
+//		
+//		p1.addExercise(Exercise.selectAll().get(3), 1, 100, 5);
+//		p1.addExercise(Exercise.selectAll().get(3), 1, 100, 4);
+//		p1.addExercise(Exercise.selectAll().get(3), 1, 95, 5);
+//		
+//		p1.addExercise(Exercise.selectAll().get(4), 2, 10, 6);
+//		p1.addExercise(Exercise.selectAll().get(4), 2, 10, 5);
+//		p1.addExercise(Exercise.selectAll().get(4), 2, 10, 4);
+//		
+//		p1.addExercise(Exercise.selectAll().get(0), 2, 26, 7);
+//		p1.addExercise(Exercise.selectAll().get(0), 2, 26, 6);
+//		p1.addExercise(Exercise.selectAll().get(0), 2, 24, 5);
+//		
+//		p2.addExercise(Exercise.selectAll().get(1), 1, 110, 6);
+//		p2.addExercise(Exercise.selectAll().get(1), 1, 110, 5);
+//		p2.addExercise(Exercise.selectAll().get(1), 1, 105, 4);
+//		p2.addExercise(Exercise.selectAll().get(1), 1, 100, 5);
+//		
+//		p2.addExercise(Exercise.selectAll().get(0), 1, 26, 7);
+//		p2.addExercise(Exercise.selectAll().get(0), 1, 26, 6);
+//		p2.addExercise(Exercise.selectAll().get(0), 1, 24, 5);
+//		
+//		p2.addExercise(Exercise.selectAll().get(2), 2, 67, 6);
+//		p2.addExercise(Exercise.selectAll().get(2), 2, 67, 5);
+//		p2.addExercise(Exercise.selectAll().get(2), 2, 67, 4);
+//		
+//		p2.addExercise(Exercise.selectAll().get(3), 2, 30, 7);
+//		p2.addExercise(Exercise.selectAll().get(3), 2, 35, 6);
+//		p2.addExercise(Exercise.selectAll().get(3), 2, 40, 5);
+//		
+//		System.out.println("Plan 1 full info");
+//		p1.selectFullPlanInfo();
+//		System.out.println("\n\n\n");
+//		System.out.println("Plan 2 full info");
+//		p2.selectFullPlanInfo();
+//		System.out.println("\n\n\n");
+//		System.out.println("Plan 1 day 1");
+//		p1.selectDayInfo(1);
+//		System.out.println("\n\n\nPlan 2 day 2");
+//		p2.selectDayInfo(2);
+//		p2.selectFullPlanInfo();
 		
-//		p2.addExercise(e1, 1, 56, 5);
-//		p2.addExercise(e1, 1, 98, 6); 
-//		p2.addExercise(e1, 1, 58, 3);
-//		
-//		p2.addExercise(e2, 1, 45, 6);
-//		p2.addExercise(e2, 1, 78, 5);
-//		p2.addExercise(e2, 1, 64, 7);
-//		
-//		p2.addExercise(e3, 1, 34, 6);
-//		p2.addExercise(e3, 1, 45, 5);
-//		p2.addExercise(e3, 1, 12, 4);
-//		
-//		p2.addExercise(e2, 2, 20, 8);
-//		p2.addExercise(e2, 2, 50, 7);
-//		p2.addExercise(e2, 2, 10, 6);
-//		
-//		p2.addExercise(e, 2, 20, 6);
-//		p2.addExercise(e, 2, 67, 5);
-//		p2.addExercise(e, 2, 10, 7);
-//		
-//		p2.addExercise(e1, 2, 12, 6);
-//		p2.addExercise(e1, 2, 30, 5);
-//		p2.addExercise(e1, 2, 55, 4);	
+
 		
 		session.close();
 		System.out.println("\nfinished");

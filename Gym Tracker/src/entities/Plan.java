@@ -11,6 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
 import utilities.EntityUtil;
 import utilities.HibernateUtil;
@@ -38,7 +43,10 @@ public class Plan {
 	public Plan(String name, int timesPerWeek, User user) {
 		this.setName(name);
 		this.setTimesPerWeek(timesPerWeek);
-		this.setUsers(user);		
+		this.setUsers(user);	
+		for (int i = 0; i < this.getTimesPerWeek(); i++) {
+			days.add(new Day(i+1, this));
+		}	
 	}
 	
 	public int getId() {
@@ -76,32 +84,39 @@ public class Plan {
 		this.days = days;
 	}
 	
-	public void savePlan() {
+	public List<Day> selectDays() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		session.beginTransaction();
-		session.save(this);
-		session.getTransaction().commit();		
-		for (int i = 0; i < this.getTimesPerWeek(); i++) {
-			days.add(new Day(i+1, this));
-			EntityUtil.save(days.get(i));
-		}	
+
+		String HQL_SELECT_DAYS = "SELECT d FROM Plan p, Day d WHERE p.id=d.plan AND p.name = '" + this.getName() + "'";
+		
+		@SuppressWarnings("unchecked")
+		List<Day> result = (List<Day>) session.createQuery(HQL_SELECT_DAYS).list();
+		
+		if (result.size() == 0) {
+			System.out.println("Days are empty.");
+		} else {
+			return result;		
+		}
+		session.close();
+		return result;
 	}
 	
 	public void addExercise(Exercise exercise, int dayNr, double weight, int repetitions) {
 		SetInfo sets = new SetInfo(weight, repetitions);
 		EntityUtil.save(sets);
-		DAY_EXERCISES de = new DAY_EXERCISES(days.get(dayNr-1), exercise, sets);		
+		DAY_EXERCISES de = new DAY_EXERCISES(this.selectDays().get(dayNr-1), exercise, sets);		
 		EntityUtil.save(de);
-		
 	}
 	
 	public void selectFullPlanInfo() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		String hql = "SELECT new viewmodel.PlanInfoViewModel(p.name, d.dayNr, e.name, si.weight, si.repetitions) "
-					+"FROM Day d, SetInfo si, DAY_EXERCISES de, Exercise e, Plan p "
-					+"WHERE de.day=d.id AND e.id=de.exercises AND si.id=de.sets AND p.id=d.plan AND p.name = '" + this.getName() + "'";
+		
+		String HQL_SELECT_FULL_PLAN = "SELECT new viewmodel.PlanInfoViewModel(p.name, d.dayNr, e.name, si.weight, si.repetitions) "
+				+"FROM Day d, SetInfo si, DAY_EXERCISES de, Exercise e, Plan p "
+				+"WHERE de.day=d.id AND e.id=de.exercises AND si.id=de.sets AND p.id=d.plan AND p.name = '" + this.getName() + "'";	
+		
 		@SuppressWarnings("unchecked")
-		List<PlanInfoViewModel> result = (List<PlanInfoViewModel>) session.createQuery(hql).list();
+		List<PlanInfoViewModel> result = (List<PlanInfoViewModel>) session.createQuery(HQL_SELECT_FULL_PLAN).list();
 
 		for (int i = 0; i < result.size(); i++) {
 			PlanInfoViewModel vm = result.get(i);
@@ -110,18 +125,24 @@ public class Plan {
 			Exercise e = new Exercise(vm.getExerciseName());
 			SetInfo siWeight = new SetInfo(vm.getWeight(), vm.getRepetitions());
 			
-			System.out.println(p.getName() + " " + d.getDayNr() + " " + e.getName() + " " + siWeight.getWeight() + " " + siWeight.getRepetitions());
+			if (result.size() == 0) {
+				System.out.println("Plan is empty.");
+			} else {
+				System.out.println(p.getName() + " " + d.getDayNr() + " " + e.getName() + " " + siWeight.getWeight() + " " + siWeight.getRepetitions());
+			}
 		}
 		session.close();
 	}
 	
 	public void selectDayInfo(int day) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		String hql = "SELECT new viewmodel.PlanInfoViewModel(p.name, d.dayNr, e.name, si.weight, si.repetitions) "
+		
+		String HQL_DAY_INFO = "SELECT new viewmodel.PlanInfoViewModel(p.name, d.dayNr, e.name, si.weight, si.repetitions) "
 					+"FROM Day d, SetInfo si, DAY_EXERCISES de, Exercise e, Plan p "
 					+"WHERE de.day=d.id AND e.id=de.exercises AND si.id=de.sets AND p.id=d.plan AND d.dayNr = :dayNr AND p.name = '" + this.getName() + "'";
+		
 		@SuppressWarnings("unchecked")
-		List<PlanInfoViewModel> result = (List<PlanInfoViewModel>) session.createQuery(hql)
+		List<PlanInfoViewModel> result = (List<PlanInfoViewModel>) session.createQuery(HQL_DAY_INFO)
 				.setParameter("dayNr", day)
 				.list();		
 		
@@ -132,7 +153,11 @@ public class Plan {
 			Exercise e = new Exercise(vm.getExerciseName());
 			SetInfo siWeight = new SetInfo(vm.getWeight(), vm.getRepetitions());
 			
-			System.out.println(p.getName() + " " + d.getDayNr() + " " + e.getName() + " " + siWeight.getWeight() + " " + siWeight.getRepetitions());
+			if (result.size() == 0) {
+				System.out.println("Plan is empty.");
+			} else {
+				System.out.println(p.getName() + " " + d.getDayNr() + " " + e.getName() + " " + siWeight.getWeight() + " " + siWeight.getRepetitions());
+			}
 		}
 		session.close();
 	}
