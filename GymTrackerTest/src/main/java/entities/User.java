@@ -14,6 +14,7 @@ import org.hibernate.Session;
 
 import utilities.HibernateUtil;
 import viewmodel.LoginViewModel;
+import viewmodel.PlanInfoViewModel;
 
 @Entity
 public class User {
