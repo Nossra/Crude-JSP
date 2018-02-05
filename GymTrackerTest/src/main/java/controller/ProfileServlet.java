@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import viewmodel.LoginViewModel;
+
 /**
  * Servlet implementation class ProfileServlet
  */
@@ -20,12 +22,14 @@ public class ProfileServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		
-		HttpSession session = request.getSession(true);
+		HttpSession session = request.getSession(false);
 		
-		if (session != null) {
-			String user = request.getParameter("user");			
+		if (session != null && session.getAttribute("user") != null) {
+			LoginViewModel user = (LoginViewModel) session.getAttribute("user");			
+			request.getRequestDispatcher("profile.jsp").include(request, response);
+		} else {
+			response.sendRedirect("login");
 		}
-		request.getRequestDispatcher("profile.jsp").include(request, response);
 	}
 
 	/**

@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import entities.User;
 import services.LoginService;
@@ -33,10 +34,11 @@ public class LoginServlet extends HttpServlet {
 		try {
 			if (loginService.login(username, password) == true) {				
 				LoginViewModel user = loginService.getDetails(username);
-				request.getSession().setAttribute("user", user);
+				HttpSession session = request.getSession(true);
+				session.setAttribute("user", user);
 				response.sendRedirect("profile");
 			} else {
-				response.sendRedirect("login");
+				doGet(request, response);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

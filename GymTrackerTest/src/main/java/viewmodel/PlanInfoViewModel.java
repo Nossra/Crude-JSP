@@ -6,14 +6,20 @@ public class PlanInfoViewModel {
 	private String exerciseName;
 	private double weight;
 	private int repetitions;
+	private int planId;
 		
-	public PlanInfoViewModel(String planName, int dayNr, String exerciseName, double weight, int repetitions) {
+	public PlanInfoViewModel() {
+		
+	}
+	
+	public PlanInfoViewModel(String planName, int planId, int dayNr, String exerciseName, double weight, int repetitions) {
 		super();
 		this.planName = planName;
 		this.dayNr = dayNr;
 		this.exerciseName = exerciseName;
 		this.weight = weight;
 		this.repetitions = repetitions;
+		this.planId = planId;
 	}
 	public String getPlanName() {
 		return planName;
@@ -44,5 +50,11 @@ public class PlanInfoViewModel {
 	}
 	public void setRepetitions(int repetitions) {
 		this.repetitions = repetitions;
+	}
+	public int getPlanId() {
+		return planId;
+	}
+	public void setPlanId(int planId) {
+		this.planId = planId;
 	}	
 }

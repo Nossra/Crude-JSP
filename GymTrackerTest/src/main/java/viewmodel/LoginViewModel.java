@@ -103,13 +103,35 @@ public class LoginViewModel {
 //		return result;
 //	}
 	
-	public List<PlanInfoViewModel> selectPlanNames() {
+	public List<PlanInfoViewModel> selectPlanInfoById(String Id) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		int id = Integer.parseInt(Id);
+		String HQL_SELECT_FULL_PLAN = "SELECT new viewmodel.PlanInfoViewModel(p.name, p.id, d.dayNr, e.name, si.weight, si.repetitions) "
+				+"FROM Day d, SetInfo si, DAY_EXERCISES de, Exercise e, Plan p, User u "
+				+"WHERE p.id =:planId AND de.day=d.id AND e.id=de.exercises AND si.id=de.sets AND p.id=d.plan AND u.id=p.users AND u.username = '" + this.getUsername() + "'";	
+		Query q = session.createQuery(HQL_SELECT_FULL_PLAN);
+		q.setParameter("planId", id);
+		
+		return q.getResultList();
+	}
+	
+	public List<String> selectPlanNames() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		
 		final String HQL_PLAN_NAMES = "SELECT p.name FROM Plan p WHERE p.users = (SELECT id FROM User WHERE username = '" + this.getUsername() + "')";
 		
 		@SuppressWarnings("unchecked")
-		List<PlanInfoViewModel> result = session.createQuery(HQL_PLAN_NAMES).getResultList();
+		List<String> result = session.createQuery(HQL_PLAN_NAMES).getResultList();
 		return result;
+	}
+	
+	public int selectTimesPerWeekById(String Id) {
+		Session s = HibernateUtil.getSessionFactory().openSession();
+		int id = Integer.parseInt(Id);
+		String HQL = "SELECT timesPerWeek FROM Plan WHERE id=:id";
+		Query timesPerWeek = s.createQuery(HQL);
+		timesPerWeek.setParameter("id", id);
+		
+		return (Integer) timesPerWeek.getSingleResult();
 	}
 }

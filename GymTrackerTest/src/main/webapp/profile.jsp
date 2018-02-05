@@ -16,15 +16,19 @@
 </head>
 <body style="background-color: #2B3E50">
      <% LoginViewModel user = (LoginViewModel) session.getAttribute("user"); %>
-     <div class="jumbotron">
-          <h1 class="display-3">Welcome <% out.println(user.getName());%>!</h1>
-          <p class="lead">asdasdasd</p>
-          <hr class="my-4">
-          <p>asdasdasd</p>
-          <p class="lead">
-          <a href="createplan"><button type="button" class="btn btn-info">Create plan</button></a>
-          <a href="viewplans"><button type="button" class="btn btn-info">View plans</button></a>
-          </p>
-     </div>
+     <div class="row">
+     	<div class="col-6 offset-3">
+     	     <div class="jumbotron">
+		          <h1 class="display-3">Welcome <% out.println(user.getName());%>!</h1>
+		          <p class="lead">asdasdasd</p>
+		          <hr class="my-4">
+		          <p>asdasdasd</p>
+		          <p class="lead">
+		          <a href="createplan"><button type="button" class="btn btn-info">Create plan</button></a>
+		          <a href="viewplans"><button type="button" class="btn btn-info">View plans</button></a>
+		          </p>
+	     	</div>
+  		</div>
+  	</div>
 </body>
 </html>
