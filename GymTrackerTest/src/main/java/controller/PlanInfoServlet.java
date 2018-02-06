@@ -33,39 +33,23 @@ public class PlanInfoServlet extends HttpServlet {
 		String id = request.getParameter("id");
 		LoginViewModel user = (LoginViewModel) session.getAttribute("user"); 
 		if (session != null && user != null) {
-				System.out.println(user.selectTimesPerWeekById(id));		
-			out.println(
-					"<div class=\"row\">"
-					 +"<div class=\"col-2 offset-3\">"
-					 +"<div class=\"list-group\" id=\"list-tab\" role=\"tablist\">"
-					);
-			for (int i = 0; i < user.selectTimesPerWeekById(id); i++) {
-				out.println(
-			 "<a class=\"list-group-item list-group-item-action\" id=\"list-profile-list\" "
-			 + "data-toggle=\"list\" href=\"#list-profile\" role=\"tab\" aria-controls=\"profile\">Day " + (i+1) + "</a>");
-			}
-			out.println(
-					  "</div>\r\n" 
-					+ "</div>"
-					+ "<div class=\"col-4\">\r\n"
-					+ "<div class=\"tab-content\" id=\"nav-tabContent\">"
-				);
-			for (int i = 0; i < user.selectTimesPerWeekById(id); i++) {
-				out.println("<div class=\"tab-pane fade\" id=\"list-profile\" role=\"tabpanel\" aria-labelledby=\"list-profile-list\">"
-						+ "<div class=\"card text-white bg-secondary mb-3\" style=\"max-width: 20rem;\">\r\n" + 
-						"						  <div class=\"card-header\">Day " + (i+1) + "</div>\r\n" + 
-						"						  <div class=\"card-body\">\r\n" + 
-						"						    <h4 class=\"card-title\">" + user.selectPlanInfoById(id).get(i).getExerciseName() + "</h4>\r\n" + 
-						"						    <p class=\"card-text\">Repetitions: " + user.selectPlanInfoById(id).get(i).getRepetitions() + "</p>\r\n" + 
-						"						  </div>\r\n" + 
-						"						</div>"
-						+ "</div>");
-			}
-			out.println("</div>" + 
-					"  </div>" + 
-					"</div>");
-		}
+			out.println("<div class=\"row\">\r\n" + 
+					"		<div class=\"col-6 offset-3\">");
 		
+			for (int i = 0; i < user.selectTimesPerWeekById(id); i++) {
+				out.println("<button type=\"button\" class=\"btn btn-info\" data-toggle=\"collapse\" data-target=\"#demo"+(i+1)+"\">Day "+ (i+1) +"</button>\r\n" + 
+						"  <div id=\"demo"+(i+1)+"\" class=\"collapse\">\r\n" + 
+							"<h2>" + user.selectPlanInfoById(id).get(i).getExerciseName() + "</h2>");
+							for (int j = 0; j < user.selectAmountOfSets; j++) {
+								out.println("<p>" + user.selectPlanInfoById(id).get(i).getWeight() + "kg, " + 
+											user.selectPlanInfoById(id).get(i).getRepetitions() + " repetitions." + "</p>" +
+											"</div>");
+							}
+			}	
+			out.println("</div>\r\n" + 
+					 "</div>");
+			
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

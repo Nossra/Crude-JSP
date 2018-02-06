@@ -134,4 +134,14 @@ public class LoginViewModel {
 		
 		return (Integer) timesPerWeek.getSingleResult();
 	}
+	
+	public int selectAmountOfSetsByPlanId(String Id) {
+		Session s = HibernateUtil.getSessionFactory().openSession();
+		int id = Integer.parseInt(Id);
+		String HQL = "SELECT timesPerWeek FROM Plan WHERE id=:id";
+		Query timesPerWeek = s.createQuery(HQL);
+		timesPerWeek.setParameter("id", id);
+		
+		return (Integer) timesPerWeek.getSingleResult();
+	}
 }
