@@ -11,15 +11,21 @@
 </head>
 <body style="background-color: #2B3E50">
      <% LoginViewModel user = (LoginViewModel) session.getAttribute("user"); %>
-     <div class="jumbotron">
-          <h1 class="display-3">Create plans for <% out.println(user.getUsername()); %></h1>
-          <p class="lead">Create unlimited plans for different purposes</p>
-          <hr class="my-4">
-          <p>Create a new plan here.</p>
-          <p class="lead">
-          <button type="button" class="btn btn-info">Create plan</button>
-          </p>
+      <div class="row">
+  		<div class="col-6 offset-3">
+	     	<div class="jumbotron">
+	          <h1 class="display-3">Create plans for <% out.println(user.getUsername()); %></h1>
+	          <p class="lead">Create unlimited plans for different purposes</p>
+	          <hr class="my-4">
+	          <p>Create a new plan here.</p>
+	          <p class="lead">
+	          <button type="button" class="btn btn-info">Create plan</button>
+	          </p>
+   	 		</div>
+   		</div>
      </div>
+     	
+
      
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
   <% out.println(user.selectPlanNames().get(0)); %>
