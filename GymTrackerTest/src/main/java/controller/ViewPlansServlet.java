@@ -40,16 +40,14 @@ public class ViewPlansServlet extends HttpServlet {
 						+"<div class=\"col-6 offset-3\">");
 			for (int i = 0; i < user.selectPlanNames().size(); i++) {	
 				
+				//Suspiciously close to the code in the method selectPlanNames, but returns single result instead of entire list.
 				Session s = HibernateUtil.getSessionFactory().openSession();
-				
 				final String HQL_PLAN_NAMES = "SELECT p.id FROM Plan p WHERE p.users = (SELECT id FROM User WHERE username = '" + user.getUsername() + "') AND p.name = '"+user.selectPlanNames().get(i)+ "'";
-				
 				@SuppressWarnings("unchecked")
 				Object result = s.createQuery(HQL_PLAN_NAMES).getSingleResult();
 						
-				request.getSession().setAttribute("planindex", i);
 				out.println(
-					"<div class=\"card text-white bg-info mb-3\" style=\"max-width: 18rem; float: left; margin-right:1%\">"
+					"<div class=\"card text-white bg-secondary mb-3\" style=\"max-width: 18rem; float: left; margin-right:1%\">"
 				    	+"<div class=\"card-header\">Plan "+ (i+1) +"</div>"
 				    	+"<div class=\"card-body\">" 
 					    	+"<h4 class=\"card-title\">" + user.selectPlanNames().get(i) + "</h4>"

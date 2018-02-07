@@ -11,15 +11,15 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 		<style>
 			.nav-st {
-			position: fixed !important;
-    width: 50% !important;
-    z-index: 99 !important;
-    margin-left: 25% !important;
-    }
+				position: fixed !important;
+			    width: 50% !important;
+			    z-index: 99 !important;
+			    margin-left: 25% !important;
+	   		}
 		</style>
 	</head>
 	<body style="background-color: #2B3E50">
-				 <nav class="navbar navbar-expand-lg navbar-dark bg-dark nav-st" >
+		 <nav class="navbar navbar-expand-lg navbar-dark bg-dark nav-st" >
          <a class="navbar-brand" href="#">gym</a>
          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
            <span class="navbar-toggler-icon"></span>
@@ -38,4 +38,4 @@
              </li>
            </ul>
          </div>
-       </nav>
+      </nav>

@@ -39,109 +39,37 @@ public class LoginViewModel {
 		this.name = name;
 	}
 	
-	public String selectFullPlanInfo() {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		
-		String HQL_SELECT_FULL_PLAN = "SELECT new viewmodel.PlanInfoViewModel(p.name, d.dayNr, e.name, si.weight, si.repetitions) "
-				+"FROM Day d, SetInfo si, DAY_EXERCISES de, Exercise e, Plan p, User u "
-				+"WHERE de.day=d.id AND e.id=de.exercises AND si.id=de.sets AND p.id=d.plan AND u.id=p.users AND u.username = '" + this.getUsername() + "'";	
-		
-		@SuppressWarnings("unchecked")
-		List<PlanInfoViewModel> result = (List<PlanInfoViewModel>) session.createQuery(HQL_SELECT_FULL_PLAN).list();
-		String resultString = "";
-		for (int i = 0; i < result.size(); i++) {
-			PlanInfoViewModel vm = result.get(i);
-			Plan p = new Plan(vm.getPlanName());
-			Day d = new Day(vm.getDayNr());
-			Exercise e = new Exercise(vm.getExerciseName());
-			SetInfo siWeight = new SetInfo(vm.getWeight(), vm.getRepetitions());
-			
-			if (result.size() == 0) {
-				resultString = "No plans found.";
-			} else {
-				resultString += p.getName() + " " + d.getDayNr() + " " + e.getName() + " " + siWeight.getWeight() + " " + siWeight.getRepetitions() + "\n";
-			}
-		}
-		return resultString;
-	}
-
-	public void selectDayInfo(int day) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		
-		String HQL_DAY_INFO = "SELECT new viewmodel.PlanInfoViewModel(p.name, d.dayNr, e.name, si.weight, si.repetitions) "
-					+"FROM Day d, SetInfo si, DAY_EXERCISES de, Exercise e, Plan p,"
-					+"WHERE de.day=d.id AND e.id=de.exercises AND si.id=de.sets AND p.id=d.plan AND d.dayNr = :dayNr AND p.name = '" + this.getName() + "'";
-		
-		@SuppressWarnings("unchecked")
-		List<PlanInfoViewModel> result = (List<PlanInfoViewModel>) session.createQuery(HQL_DAY_INFO)
-				.setParameter("dayNr", day)
-				.list();		
-		
-		for (int i = 0; i < result.size(); i++) {
-			PlanInfoViewModel vm = result.get(i);
-			Plan p = new Plan(vm.getPlanName());
-			Day d = new Day(vm.getDayNr());
-			Exercise e = new Exercise(vm.getExerciseName());
-			SetInfo siWeight = new SetInfo(vm.getWeight(), vm.getRepetitions());
-			
-			if (result.size() == 0) {
-				System.out.println("Plan is empty.");
-			} else {
-				System.out.println(p.getName() + " " + d.getDayNr() + " " + e.getName() + " " + siWeight.getWeight() + " " + siWeight.getRepetitions());
-			}
-		}
-		session.close();
-	}
-	
-//	public List<PlanInfoViewModel> amountOfPlans() {
-//		Session session = HibernateUtil.getSessionFactory().openSession();
-//		
-//		final String HQL_PLAN_AMOUNT = "SELECT p.id FROM Plan p WHERE p.users = (SELECT id FROM User WHERE username = '" + this.getUsername() + "')";
-//		
-//		@SuppressWarnings("unchecked")
-//		List<PlanInfoViewModel> result = session.createQuery(HQL_PLAN_AMOUNT).getResultList();
-//		return result;
-//	}
-	
+//	!! IMPORTANT !!
+//	REFACTOR THIS TO USE NAMED PARAMETER INSTEAD
 	public List<PlanInfoViewModel> selectPlanInfoById(String Id) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		int id = Integer.parseInt(Id);
-		String HQL_SELECT_FULL_PLAN = "SELECT new viewmodel.PlanInfoViewModel(p.name, p.id, d.dayNr, e.name, si.weight, si.repetitions) "
-				+"FROM Day d, SetInfo si, DAY_EXERCISES de, Exercise e, Plan p, User u "
-				+"WHERE p.id =:planId AND de.day=d.id AND e.id=de.exercises AND si.id=de.sets AND p.id=d.plan AND u.id=p.users AND u.username = '" + this.getUsername() + "'";	
+		
+		String HQL_SELECT_FULL_PLAN = 
+				  "SELECT new viewmodel.PlanInfoViewModel(p.name, p.id, d.dayNr, e.name, si.weight, si.repetitions, p.timesPerWeek) "
+				+ "FROM Day d, SetInfo si, DAY_EXERCISES de, Exercise e, Plan p, User u "
+				+ "WHERE de.day=d.id AND e.id=de.exercises AND si.id=de.sets AND p.id=d.plan AND u.id=p.users "
+				+ "AND u.username = '" + this.getUsername() + "'"
+				+ "AND p.id = :planId" ;
+		
 		Query q = session.createQuery(HQL_SELECT_FULL_PLAN);
 		q.setParameter("planId", id);
 		
 		return q.getResultList();
 	}
 	
+//	NOTE:
+//	Is currently needed but are in actuality unnecessary since the data can
+//	be drawn from the selectPlanInfoById method Refactor later
 	public List<String> selectPlanNames() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		
-		final String HQL_PLAN_NAMES = "SELECT p.name FROM Plan p WHERE p.users = (SELECT id FROM User WHERE username = '" + this.getUsername() + "')";
+		final String HQL_PLAN_NAMES = 
+				"SELECT p.name FROM Plan p " + 
+				"WHERE p.users = (SELECT id FROM User WHERE username = '" + this.getUsername() + "')";
 		
 		@SuppressWarnings("unchecked")
 		List<String> result = session.createQuery(HQL_PLAN_NAMES).getResultList();
 		return result;
-	}
-	
-	public int selectTimesPerWeekById(String Id) {
-		Session s = HibernateUtil.getSessionFactory().openSession();
-		int id = Integer.parseInt(Id);
-		String HQL = "SELECT timesPerWeek FROM Plan WHERE id=:id";
-		Query timesPerWeek = s.createQuery(HQL);
-		timesPerWeek.setParameter("id", id);
-		
-		return (Integer) timesPerWeek.getSingleResult();
-	}
-	
-	public int selectAmountOfSetsByPlanId(String Id) {
-		Session s = HibernateUtil.getSessionFactory().openSession();
-		int id = Integer.parseInt(Id);
-		String HQL = "SELECT timesPerWeek FROM Plan WHERE id=:id";
-		Query timesPerWeek = s.createQuery(HQL);
-		timesPerWeek.setParameter("id", id);
-		
-		return (Integer) timesPerWeek.getSingleResult();
 	}
 }
