@@ -19,7 +19,8 @@
 		          <p class="lead">View your plan information, edit or delete them as needed.</p>
 		          <hr class="my-4">
 		          <p class="lead">
-		          <button type="button" class="btn btn-primary">Edit plan</button>
+					  <button type="button" class="btn btn-danger">Delete plan</button>
+					</div>
 		          </p>
 		         </div>
 	   	  	</div>

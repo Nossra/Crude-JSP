@@ -20,8 +20,7 @@ public class NewDayServlet extends HttpServlet {
 		response.setContentType("text/html");
 		HttpSession session = request.getSession(false);
 		LoginViewModel user = (LoginViewModel) session.getAttribute("user");	
-		if (session != null && session.getAttribute("user") != null) {
-					
+		if (session != null && session.getAttribute("user") != null) {	
 			request.getRequestDispatcher("newday.jsp").include(request, response);
 			
 			
