@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -43,33 +44,47 @@ public class PlanInfoServlet extends HttpServlet {
 		
 			List<PlanInfoViewModel> plan = user.selectPlanInfoById(plan_id);
 			Map<Integer, List<PlanInfoViewModel>> day = plan.stream().collect(Collectors.groupingBy(PlanInfoViewModel::getDayNr));
-			Map<String, List<PlanInfoViewModel>> exercise = plan.stream().collect(Collectors.groupingBy(PlanInfoViewModel::getExerciseName));
 			
+			int j = 0;
 			out.println("<div class=\"row\">\r\n" + 
-						"<div class=\"col-6 offset-3\">");
-			
-			int index = 0;
-			for(Entry<Integer, List<PlanInfoViewModel>> e : day.entrySet()) { 
-				out.println("<div class=\"jumbotron\">");
-				out.println("<p class=\"display-3\" style=\"2.5rem\">Day " + e.getValue().get(0).getDayNr() + "</p>");
-				index++;
-				for (Entry<String, List<PlanInfoViewModel>> en : exercise.entrySet()) {
-					if (en.getValue().get(0).getDayNr() == index) {
-						out.println("<p class=\"lead\">");
-						out.println("<h4>" + en.getValue().get(0).getExerciseName()+ "</h4></p>");
-						out.println("<hr class=\"my-4\">\r\n");
-						if (en.getValue().get(0).getDayNr() == index) {
-							for(int i = 0; i < en.getValue().size(); i++) {
-								out.println("<p>" + en.getValue().get(i).getWeight() + " kg, x " + en.getValue().get(i).getRepetitions() + "</p>");
+						"<div class=\"col-3 offset-1\" style=\"margin-left:4.3333% !important;\">" +
+							"<nav id=\"navbar-example3\" class=\"navbar navbar-light bg-light\" style=\"position:fixed !important; width:20% !important;\">" + 
+								"<nav class=\"nav nav-pills flex-column\">");
+							for (Entry<Integer, List<PlanInfoViewModel>> e : day.entrySet()) {
+								String newUrl = "#item-"+ j;
+								out.println("<a class=\"nav-link\" href=\"" + newUrl + "\">Day " + e.getValue().get(0).getDayNr() + "</a>");
+								j++;
 							}
-						}	
-					}
+					out.println("</nav>" + 
+							"</nav>" +
+						"</div>" +
+						
+						"<div class=\"col-8\">");
+			int k = 0;
+			for(Entry<Integer, List<PlanInfoViewModel>> e : day.entrySet()) { 
+				out.println("<div data-spy=\"scroll\" data-target=\"#navbar-example3\" data-offset=\"0\">");
+				out.println("<div class=\"jumbotron\">");
+				out.println("<p style=\"font-size: 2rem !important;\" id=\"item-"+ k +"\">Day " + e.getValue().get(0).getDayNr() + "</p>");
+				k++;
+				
+				Map<String, List<PlanInfoViewModel>> exercise = e.getValue().stream().collect(Collectors.groupingBy(PlanInfoViewModel::getExerciseName));
+				for (Entry<String, List<PlanInfoViewModel>> en : exercise.entrySet()) {
+						out.print("<p class=\"lead\">");
+						out.print("<h4>" + en.getValue().get(0).getExerciseName()+ "</h4>");
+						out.println("<div class=\"form-group\">\r\n" + 
+								"		<fieldset>\r\n"); 
+						en.getValue().forEach(x -> {  
+							out.println("<input class=\"form-control\" style=\"float: left; width:37%;\" id=\"readOnlyInput\" type=\"text\" placeholder=\""+ x.getWeight() + " kg, x " + x.getRepetitions()+"\" readonly=\"\">\r\n");
+						});
+						out.println("</fieldset>\r\n" + 
+								"   </div>" +
+								"</p>");
 				}
 				out.println("</div>");
 			}	
-			
 			out.println("</div>"
-					  + "</div>");
+					+ "</div>"
+				  + "</div>");
 		} else {
 			String url = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/login";
 			response.sendRedirect(url); 
