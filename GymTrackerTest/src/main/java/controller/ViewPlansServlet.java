@@ -35,9 +35,7 @@ public class ViewPlansServlet extends HttpServlet {
 			request.getRequestDispatcher("viewplans.jsp").include(request, response);
 			LoginViewModel user = (LoginViewModel) session.getAttribute("user"); 
 			PrintWriter out = response.getWriter();		
-			out.println(
-					"<div class=\"row\">"
-						+"<div class=\"col-6 offset-3\">");
+			out.println("<div class=\"row\">");
 			for (int i = 0; i < user.selectPlanNames().size(); i++) {	
 				
 				//Suspiciously close to the code in the method selectPlanNames, but returns single result instead of entire list.
@@ -47,20 +45,17 @@ public class ViewPlansServlet extends HttpServlet {
 				Object result = s.createQuery(HQL_PLAN_NAMES).getSingleResult();
 						
 				out.println(
-					"<div class=\"card text-white bg-secondary mb-3\" style=\"max-width: 18rem; float: left; margin-right:1%\">"
+					"<div class=\"card text-white bg-secondary mb-3\">"
 				    	+"<div class=\"card-header\">Plan "+ (i+1) +"</div>"
 				    	+"<div class=\"card-body\">" 
 					    	+"<h4 class=\"card-title\">" + user.selectPlanNames().get(i) + "</h4>"
 					    	+"<p class=\"card-text\">Method here that shows the hit muscles.</p>"
-					    	+"<a class=\"nav-link\" href=\"planinfo?id="+result+"\">Plan info</a>"
+					    	+ "<a href=\"planinfo?id="+result+"\"><button type=\"button\" class=\"btn btn-primary\">Edit plan</button></a>"
 				    	+"</div>"
 			    	+"</div>"
 				);	
 			}
-			out.println(
-				"</div>"
-				+"</div>"
-			);
+			out.println("</div>");
 		} else {
 		String url = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/login";
 		response.sendRedirect(url); 

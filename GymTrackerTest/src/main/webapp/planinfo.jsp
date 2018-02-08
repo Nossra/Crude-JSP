@@ -7,22 +7,22 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" import="viewmodel.LoginViewModel" %>
 
-     <% 
-     LoginViewModel user = (LoginViewModel) session.getAttribute("user");
-     List<PlanInfoViewModel> vm = user.selectPlanInfoById(request.getParameter("id"));
-     //PlanInfoViewModel vmPlanName = vm.stream().filter(p -> p.getPlanName());
-     %>
-     <div class="row">
-     	<div class="col-6 offset-3">
-   		     	<div class="jumbotron">
-			          <h1 class="display-3"> <% out.println(vm.get(0).getPlanName()); %></h1>
-			          <p class="lead">View your plan information, edit or delete them as needed.</p>
-			          <hr class="my-4">
-			          <p>Create a new plan here.</p>
-			          <p class="lead">
-			          </p>
-		   	  	</div>
-  			</div>
+		     <% 
+		     LoginViewModel user = (LoginViewModel) session.getAttribute("user");
+		     List<PlanInfoViewModel> vm = user.selectPlanInfoById(request.getParameter("id"));
+		     //PlanInfoViewModel vmPlanName = vm.stream().filter(p -> p.getPlanName());
+		     %>
+		     <div class="row">
+		     	<div class="col-12">
+  		     	<div class="jumbotron">
+		          <h1 class="display-3"> <% out.println(vm.get(0).getPlanName()); %></h1>
+		          <p class="lead">View your plan information, edit or delete them as needed.</p>
+		          <hr class="my-4">
+		          <p class="lead">
+		          <button type="button" class="btn btn-primary">Edit plan</button>
+		          </p>
+		         </div>
+	   	  	</div>
    		</div>
 	</div>
 </body>
