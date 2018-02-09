@@ -43,6 +43,9 @@
              <li class="nav-item">
                <a class="nav-link" href="profile">Profile <span class="sr-only"></span></a>
              </li>
+                          <li class="nav-item">
+               <a class="nav-link" href="logout">Logout<span class="sr-only"></span></a>
+             </li>
              <li class="nav-item">
                <a class="nav-link" href="viewplans">Manage plans <span class="sr-only"></span></a>
             </li>
