@@ -28,7 +28,7 @@ public class Plan {
 	private int id;
 	private String name;
 	private int timesPerWeek;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="user_id")	
 	private User users;	
 	@OneToMany(mappedBy = "plan", cascade = CascadeType.ALL)

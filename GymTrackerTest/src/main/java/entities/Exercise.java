@@ -90,7 +90,5 @@ public class Exercise {
 		TypedQuery<Exercise> q = session.createQuery(cq);
 		List<Exercise> exercises = q.getResultList();
 		return exercises;
-		//session.close();
-		
 	}
 }
