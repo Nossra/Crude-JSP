@@ -21,26 +21,26 @@ public class App {
 //		Exercise e3 = new Exercise("Knäböj", Muscle.LÅR, "Tung basövning för ben som träffar större delar utav kroppen");
 //		Exercise e4 = new Exercise("Plankan", Muscle.MAGE, "Magövning för statisk träning");
 //		
-		User martin = new User("Martin", "Nosslin", "1234");
-		Plan p1 = new Plan("Get ripped", 3, martin);
+//		User martin = new User("Martin", "Nosslin", "1234");
+//		Plan p1 = new Plan("Get ripped", 3, martin);
 //		Plan p2 = new Plan("Get swole", 2, martin);
 //		
 //		EntityUtil.saveAll(e, e1, e2, e3, e4);
 //		EntityUtil.save(martin);
 //		EntityUtil.saveAll(p1, p2);
+////		
+//		p1.addExercise(Exercise.selectAll().get(2), 3, 80, 5);
 //		
-		p1.addExercise(Exercise.selectAll().get(2), 3, 80, 5);
-		
-		p1.addExercise(Exercise.selectAll().get(2), 3, 80, 4);
-		p1.addExercise(Exercise.selectAll().get(2), 3, 75, 5);
-		
-		p1.addExercise(Exercise.selectAll().get(3), 3, 100, 5);
-		p1.addExercise(Exercise.selectAll().get(3), 3, 100, 4);
-		p1.addExercise(Exercise.selectAll().get(3), 3, 95, 5);
-		
-		p1.addExercise(Exercise.selectAll().get(4), 3, 10, 6);
-		p1.addExercise(Exercise.selectAll().get(4), 3, 10, 5);
-		p1.addExercise(Exercise.selectAll().get(4), 3, 10, 4);
+//		p1.addExercise(Exercise.selectAll().get(2), 3, 80, 4);
+//		p1.addExercise(Exercise.selectAll().get(2), 3, 75, 5);
+//		
+//		p1.addExercise(Exercise.selectAll().get(3), 3, 100, 5);
+//		p1.addExercise(Exercise.selectAll().get(3), 3, 100, 4);
+//		p1.addExercise(Exercise.selectAll().get(3), 3, 95, 5);
+//		
+//		p1.addExercise(Exercise.selectAll().get(4), 3, 10, 6);
+//		p1.addExercise(Exercise.selectAll().get(4), 3, 10, 5);
+//		p1.addExercise(Exercise.selectAll().get(4), 3, 10, 4);
 		
 //		p1.addExercise(Exercise.selectAll().get(0), 2, 26, 7);
 //		p1.addExercise(Exercise.selectAll().get(0), 2, 26, 6);

@@ -49,7 +49,7 @@ public class LoginService {
 				LoginViewModel user = new LoginViewModel();
 				user.setName(userList.get(i).getName());
 				user.setUsername(userList.get(i).getUsername());
-				
+				user.setId(userList.get(i).getId());
 				return user;
 			}
 		}
