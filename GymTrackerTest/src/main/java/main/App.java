@@ -13,6 +13,15 @@ import viewmodel.LoginViewModel;
 public class App {
 
 	public static void main(String[] args) {
+		Session s = HibernateUtil.getSessionFactory().openSession();
+		final String HQL_USER = "FROM User u WHERE u.id = :id";
+		@SuppressWarnings("unchecked")
+		User result = (User) s.createQuery(HQL_USER)
+				.setParameter("id", 1)
+				.getSingleResult();
+		System.out.println(result);
+		
+		
 //		Session session = HibernateUtil.getSessionFactory().openSession();
 //		
 //		Exercise e = new Exercise("Hantel Curl", Muscle.BICEPS, "Bicepsövning där man lyfter hantlar");
