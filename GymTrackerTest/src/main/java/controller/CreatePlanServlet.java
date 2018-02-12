@@ -58,9 +58,9 @@ public class CreatePlanServlet extends HttpServlet {
 		
 		Plan p = new Plan(planName, amountOfDays, thisUser);
 		
-		List<Exercise> exercises = Exercise.selectAll();
+//		List<Exercise> exercises = Exercise.selectAll();
 		
-//		EntityUtil.save(p);
+		EntityUtil.save(p);
 		response.sendRedirect("viewplans");
 	}
 
