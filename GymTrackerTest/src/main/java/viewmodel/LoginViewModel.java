@@ -14,14 +14,16 @@ import utilities.HibernateUtil;
 public class LoginViewModel {
 	private String username;
 	private String name;
+	private int id;
 	
 	public LoginViewModel() {
 		
 	}
 	
-	public LoginViewModel(String username, String name) {
+	public LoginViewModel(String username, String name, int id) {
 		this.setUsername(username);
 		this.setName(name);
+		this.setId(id);
 	}
 	
 	public String getUsername() {
@@ -71,5 +73,13 @@ public class LoginViewModel {
 		@SuppressWarnings("unchecked")
 		List<String> result = session.createQuery(HQL_PLAN_NAMES).getResultList();
 		return result;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

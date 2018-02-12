@@ -11,8 +11,9 @@
 </head>
 <body>
 	<div class="container">
-		<div class="row">
-			<div class="col-12">
+		<div class="row" style="margin-top:40%;">
+			<div class="col-8 offset-2">
+			     <img src="logoblack.png">
 				<form method="post" action="login">
 				    <div class="form-group">
 				        <label for="user">Username</label>

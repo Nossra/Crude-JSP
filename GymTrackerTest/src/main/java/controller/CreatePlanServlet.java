@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import entities.Plan;
+import utilities.EntityUtil;
 import viewmodel.LoginViewModel;
 
 /**
@@ -16,7 +18,7 @@ import viewmodel.LoginViewModel;
 @WebServlet("/createplan")
 public class CreatePlanServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	LoginViewModel user;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
@@ -25,8 +27,10 @@ public class CreatePlanServlet extends HttpServlet {
 		
 		
 		if (session != null) {
-			LoginViewModel user = (LoginViewModel) session.getAttribute("user"); 
+			user = (LoginViewModel) session.getAttribute("user"); 
 			
+		} else {
+			response.sendRedirect("login");
 		}
 		request.getRequestDispatcher("createplan.jsp").include(request, response);
 	}
@@ -35,8 +39,11 @@ public class CreatePlanServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String planName = request.getParameter("planName");
+		int amountOfDays = Integer.parseInt(request.getParameter("amountOfDays"));
+//		Plan p = new Plan(planName, amountOfDays, user);
+//		EntityUtil.save(p);
+		
 	}
 
 }

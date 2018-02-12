@@ -8,10 +8,10 @@
 	<head>
 		<title>Testing ..</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-				<script
-  src="http://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
+		<script
+		  src="http://code.jquery.com/jquery-3.3.1.min.js"
+		  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+		  crossorigin="anonymous"></script>
 		<script>
 		<%@ include file="js/bootstrap.min.js" %>
 		<%@ include file="js/bootstrap.bundle.js" %>
@@ -31,7 +31,7 @@
 	   		}
 		</style>
 	</head>
-	<body style="background-color: #2B3E50">
+	<body style="background-color: #2B3E50; color:#EBEBEB !important;">
 		 <nav class="navbar navbar-expand-lg navbar-dark bg-dark nav-st" >
          <a class="navbar-brand" href="#">gym</a>
          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
