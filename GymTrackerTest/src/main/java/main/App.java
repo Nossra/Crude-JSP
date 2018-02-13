@@ -1,5 +1,8 @@
 package main;
 
+import java.awt.List;
+import java.util.ArrayList;
+
 import org.hibernate.Session;
 
 import entities.Exercise;
@@ -13,14 +16,7 @@ import viewmodel.LoginViewModel;
 public class App {
 
 	public static void main(String[] args) {
-		Session s = HibernateUtil.getSessionFactory().openSession();
-		final String HQL_USER = "FROM User u WHERE u.id = :id";
-		@SuppressWarnings("unchecked")
-		User result = (User) s.createQuery(HQL_USER)
-				.setParameter("id", 1)
-				.getSingleResult();
-		System.out.println(result);
-		
+
 		
 //		Session session = HibernateUtil.getSessionFactory().openSession();
 //		

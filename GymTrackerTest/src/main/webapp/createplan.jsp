@@ -5,6 +5,7 @@
 	pageEncoding="ISO-8859-1" %>
 <%@page import="viewmodel.LoginViewModel"%>
 <%@page import="entities.Exercise"%>
+<%@page import="java.util.List"%>
 
 <% LoginViewModel user = (LoginViewModel) session.getAttribute("user"); %>
 <div class="row">
@@ -17,13 +18,12 @@
 			Create plans for
 			<% out.println(user.getUsername()); %>
 		</h1>
-		<p class="lead">Unlimited plans for different purposes</p>
 		<hr class="my-4">
 
 	</div>
 </div>
 <div class="row">
-	<div class="col-sm-12">
+	<div class="col-12">
 		<form method="post" > 
 			<fieldset style="margin:5%;" id="form">
 			     <legend>Step 1, Plan setup</legend>
@@ -40,7 +40,7 @@
 						<option>6</option>
 						<option>7</option>
 				    </select>
-				    <button type="button" onclick="nextStep()" class="btn btn-primary" style="margin-top:3%;" id="nextStepBtn" name="nextStepBtn">Next step</button>
+				    <button type="submit" class="btn btn-primary" style="margin-top:3%;" id="nextStepBtn" name="nextStepBtn">Next step</button>
 				</div>
 			</fieldset>
 		</form>
@@ -48,23 +48,33 @@
 </div>
 <script>
 	function nextStep() {
-		step2();
+		//step2();
 		var name = document.getElementById("planName").readOnly = true;
 		var days = document.getElementById("amountOfDays").disabled = true;
 		var nextStepBtn = document.getElementById("nextStepBtn").disabled = true;
 		
 	}
 
-	function step2() {
+	/*function step2() {
 		var form = document.getElementById("form");
 		var formgroup = document.createElement('div');
 		formgroup.classList.add("form-group");
 
-		formgroup.innerHTML = 
+		formgroup.innerHTML =
 		"<legend>Step 2, exercises</legend>" +
-		"<label for=\"amountOfDays\">Choose exercise</label>" +
-			"<select class=\"form-control\" name=\"exerciseSelectList\" id=\"exerciseSelectList\">"+
+		"<label for=\"exerciseSelectList\">Choose exercise</label>" +
+		"<select class=\"form-control\" name=\"exerciseSelectList\" id=\"exerciseSelectList\">"+
 	    "</select>" + 
+	    "<label for=\"sets\">Amount of sets</label>" +
+	    "<select type=\"text\" name=\"sets\" id=\"sets\" placeholder=\"Amount of sets\" class=\"form-control\">" + 
+	        "<option>1</option>"+
+	        "<option>2</option>"+
+	        "<option>3</option>"+
+	        "<option>4</option>"+
+	        "<option>5</option>"+
+	        "<option>6</option>"+
+	        "<option>7</option>"+
+	    "</select>" +
 	    "<button type=\"button\"" +
 		    	"onclick=\"nextStep()\"" +
 			    "class=\"btn btn-primary\"" +
@@ -72,10 +82,19 @@
 				"id=\"nextStepBtn\"" + 
 				"name=\"nextStepBtn\">" +
 					"Next step" +
-		"</button>"
-			
-		form.appendChild(formgroup);
+		"</button>" +
+	      "<button type=\"button\"" +
+          "class=\"btn btn-primary\"" +
+          "style=\"margin-top:3%;\"" +
+          "id=\"finishDay\"" + 
+          "name=\"finishDay\">" +
+              "Finish" +
+		  "</button>";
+	
+        form.appendChild(formgroup);
 
+
+		
 		/*var legend = document.createElement('legend');
 		legend.innerHTML = "Step 2, add exercises</br>";
 				
@@ -104,7 +123,7 @@
 		formgroup.appendChild(cancel);
 		form.appendChild(formgroup);*/
 		
-	}
+//	}
 
 	function cancel() {
 		var name = document.getElementById("planName").readOnly = false;
