@@ -60,6 +60,8 @@ public class CreatePlanServlet extends HttpServlet {
 		
 		List<Exercise> exercises = Exercise.selectAll();
 		
+		
+		
 //		EntityUtil.save(p);
 		response.sendRedirect("viewplans");
 	}
