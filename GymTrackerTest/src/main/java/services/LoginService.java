@@ -26,8 +26,6 @@ public class LoginService {
 		
 		for (int i = 0; i < userList.size(); i++) {
 			if (userList.get(i).getUsername().equals(username) && userList.get(i).getPassword().equals(password)) {
-//				System.out.println(userList.get(i).getName() + " " + userList.get(i).getUsername() + " " + userList.get(i).getPassword());
-//				LoginViewModel lvm = new LoginViewModel(userList.get(i).getUsername(), userList.get(i).getPassword());
 				return true;
 			}
 		}

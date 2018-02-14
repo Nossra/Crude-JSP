@@ -38,7 +38,7 @@ public class PlanInfoServlet extends HttpServlet {
 		LoginViewModel user = (LoginViewModel) session.getAttribute("user");
 		if (session != null && user != null) {
 		
-			List<PlanInfoViewModel> plan = user.selectPlanInfoById(plan_id);
+			List<PlanInfoViewModel> plan = user.selectPlanInfoById(plan_id, user.getUsername());
 			Map<Integer, List<PlanInfoViewModel>> day = plan.stream().collect(Collectors.groupingBy(PlanInfoViewModel::getDayNr));
 			
 			int j = 0;

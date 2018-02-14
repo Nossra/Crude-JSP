@@ -10,7 +10,7 @@
 
 <% 
 	LoginViewModel user = (LoginViewModel) session.getAttribute("user");
-	List<PlanInfoViewModel> vm = user.selectPlanInfoById(request.getParameter("id"));
+	List<PlanInfoViewModel> vm = user.selectPlanInfoById(request.getParameter("id"), user.getUsername());
 	//PlanInfoViewModel vmPlanName = vm.stream().filter(p -> p.getPlanName());
 %>
 <div class="row">

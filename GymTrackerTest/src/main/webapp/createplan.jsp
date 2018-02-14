@@ -40,26 +40,31 @@
 						<option>6</option>
 						<option>7</option>
 				    </select>
-				    <button type="submit" class="btn btn-primary" style="margin-top:3%;" id="nextStepBtn" name="nextStepBtn">Next step</button>
+				    <button type="button" onclick="nextStep()" class="btn btn-primary" style="margin-top:3%;" id="nextStepBtn" name="nextStepBtn">Next step</button>
+					<input type="hidden" name="step" value="1"/> 
 				</div>
 			</fieldset>
 		</form>
 	</div>
 </div>
 <script>
+	console.log($);
 	function nextStep() {
-		//step2();
+		step2();
 		var name = document.getElementById("planName").readOnly = true;
 		var days = document.getElementById("amountOfDays").disabled = true;
 		var nextStepBtn = document.getElementById("nextStepBtn").disabled = true;
 		
 	}
 
-	/*function step2() {
+	function step2() {
 		var form = document.getElementById("form");
 		var formgroup = document.createElement('div');
 		formgroup.classList.add("form-group");
 
+
+		
+		
 		formgroup.innerHTML =
 		"<legend>Step 2, exercises</legend>" +
 		"<label for=\"exerciseSelectList\">Choose exercise</label>" +
@@ -123,9 +128,9 @@
 		formgroup.appendChild(cancel);
 		form.appendChild(formgroup);*/
 		
-//	}
+	}
 
-	function cancel() {
+/*	function cancel() {
 		var name = document.getElementById("planName").readOnly = false;
 		name.value="";
 		var days = document.getElementById("amountOfDays").disabled = false;
@@ -133,7 +138,7 @@
 		var nextStepBtn = document.getElementById("nextStepBtn").disabled = false;
 		var step2 = document.getElementById("step-2");
 		element.parentNode.removeChild(step2);
-	}
+	}*/
 
 </script>
 </body>

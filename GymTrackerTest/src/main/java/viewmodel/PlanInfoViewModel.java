@@ -12,6 +12,18 @@ public class PlanInfoViewModel {
 	public PlanInfoViewModel() {
 		
 	}
+	public PlanInfoViewModel(String planName, int planId) {
+		this.setPlanId(planId);
+		this.setPlanName(planName);
+	}
+	
+	public PlanInfoViewModel(String planName, String exerciseName, double weight, int repetitions, int timesPerWeek) {
+		this.planName = planName;
+		this.exerciseName = exerciseName;
+		this.weight = weight;
+		this.repetitions = repetitions;
+		this.setTimesPerWeek(timesPerWeek);
+	}
 	
 	public PlanInfoViewModel(String planName, int planId, int dayNr, String exerciseName, double weight, int repetitions, int timesPerWeek) {
 		super();
