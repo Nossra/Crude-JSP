@@ -1,7 +1,7 @@
 
 <%@page import="java.util.List"%>
 <%@page import="viewmodel.PlanInfoViewModel"%>
-<%@page import="entities.Exercise"%>
+<%@page import="entities.Plan"%>
 <jsp:include page="header.jsp">
 	<jsp:param value="Workout plans" name="title" />
 </jsp:include>
@@ -10,7 +10,14 @@
 
 <% 
 	LoginViewModel user = (LoginViewModel) session.getAttribute("user");
-	List<PlanInfoViewModel> vm = user.selectPlanInfoById(request.getParameter("id"), user.getUsername());
+	List<Plan> vm = user.selectPlanNames(user.getId());
+	int id = Integer.parseInt(request.getParameter("id"));
+	Plan plan = new Plan();
+	for (int i = 0; i < vm.size(); i++) {
+		if (id == vm.get(i).getId()) {
+			plan.setName(vm.get(i).getName());
+		}
+	}
 	//PlanInfoViewModel vmPlanName = vm.stream().filter(p -> p.getPlanName());
 %>
 <div class="row">
@@ -18,9 +25,9 @@
 		<div class="jumbotron">
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item"><a href="viewplans">Manage plans</a></li>
-				<li class="breadcrumb-item active"> <% out.println(vm.get(0).getPlanName()); %> </li>
+				<li class="breadcrumb-item active"> <% out.println(plan.getName()); %> </li>
 			</ol>
-			<h1 class="display-3"><% out.println(vm.get(0).getPlanName()); %> </h1>
+			<h1 class="display-3"><% out.println(plan.getName()); %> </h1>
 			<p class="lead">View your plan information, edit or delete them as needed.</p>
 			<hr class="my-4">
 			<p class="lead">

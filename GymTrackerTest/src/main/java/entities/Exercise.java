@@ -69,9 +69,9 @@ public class Exercise {
 	}
 
 	public enum Muscle {
-		BRÖST,
+		BROST,
 		AXLAR,
-		LÅR,
+		LAR,
 		VADER,
 		BICEPS,
 		TRICEPS,
@@ -79,16 +79,5 @@ public class Exercise {
 		RYGG
 	}	
 	
-	public static List<Exercise> selectAll() {
-		Session session = HibernateUtil.getSessionFactory().openSession();
 
-		CriteriaBuilder cb = session.getCriteriaBuilder();
-		CriteriaQuery<Exercise> cq = cb.createQuery(Exercise.class);
-		Root<Exercise> exercise = cq.from(Exercise.class);
-		cq.select(exercise);
-		
-		TypedQuery<Exercise> q = session.createQuery(cq);
-		List<Exercise> exercises = q.getResultList();
-		return exercises;
-	}
 }

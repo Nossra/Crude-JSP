@@ -10,23 +10,24 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 </head>
 <body>
-	<div class="container" style="position: absolute; top:25%;">
-		<div class="row">
-			<div class="col-4 offset-4">
+	<div class="container">
+		<div class="row" style="margin-top:40%;">
+			<div class="col-8 offset-2">
+			     <img src="<%= request.getContextPath() %>/static/images/logoblack.png" style="width:100%;">
 				<form method="post" action="login">
 				    <div class="form-group">
 				        <label for="user">Username</label>
-				        <input type="text" class="form-control" name="user" placeholder="Username" /><br>
-				         <label for="password">Password</label>
-                        <input type="password" class="form-control" name="password" placeholder="Password" />
+				        <input type="text" class="form-control" name="user" id="user" placeholder="Username" /><br>
+				        <label for="password">Password</label>
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Password" />
                         <small class="form-text text-muted">Password currently dont get encrypted in the database.</small>
-                        <input type="submit" value="Submit" class="btn btn-secondary">
+                        <input type="submit" value="Submit" onclick="emptyLoginForm()" class="btn btn-secondary">
+                        <label id="errorlabel"></label>
 				    </div>
 					
 				</form>
 			</div>
 		</div>
-	</div>
-		
+	</div>		
 </body>
 </html>
