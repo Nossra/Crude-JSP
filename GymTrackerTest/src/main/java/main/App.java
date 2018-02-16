@@ -35,7 +35,7 @@ public class App {
 //		EntityUtil.saveAll(p1, p2);
 ////		
 //		p1.addExercise(Exercise.selectAll().get(2), 3, 80, 5);
-//		
+		
 //		p1.addExercise(Exercise.selectAll().get(2), 3, 80, 4);
 //		p1.addExercise(Exercise.selectAll().get(2), 3, 75, 5);
 //		

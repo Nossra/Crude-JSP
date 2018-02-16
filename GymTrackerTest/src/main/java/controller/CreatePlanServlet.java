@@ -57,10 +57,10 @@ public class CreatePlanServlet extends HttpServlet {
 				.getSingleResult();
 		
 		Plan p = new Plan(planName, amountOfDays, thisUser);
+
 		
-//		List<Exercise> exercises = Exercise.selectAll();
-		
-		EntityUtil.save(p);
+//		EntityUtil.save(p);
+
 		response.sendRedirect("viewplans");
 	}
 

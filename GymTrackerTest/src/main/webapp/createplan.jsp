@@ -40,22 +40,63 @@
 						<option>6</option>
 						<option>7</option>
 				    </select>
-				    <button type="submit" class="btn btn-primary" style="margin-top:3%;" id="nextStepBtn" name="nextStepBtn">Next step</button>
+				    <button type="button" onclick="nextStep()" class="btn btn-primary" style="margin-top:3%;" id="nextStepBtn" name="nextStepBtn">Next step</button>
+					<input type="hidden" name="step" value="1"/> 
 				</div>
 			</fieldset>
 		</form>
 	</div>
 </div>
+
+<div class="row">
+	<div class="col-xs-12">
+	<form action="" method="post" id="exercisesForm">
+		<div class="form-group">
+			<legend>Step 2, exercises</legend>
+			<label for="exerciseSelectList">Choose exercise</label>
+			<select class="form-control" name="exerciseSelectList" id="exerciseSelectList">
+		    </select>
+		    <label for="sets">Amount of sets</label>
+		    <select type="text" name="sets" onchange="createSetsInput(this)" id="sets" placeholder="Amount of sets" class="form-control">
+		        <option>1</option>
+		        <option>2</option>
+		        <option>3</option>
+		        <option>4</option>
+		        <option>5</option>
+		        <option>6</option>
+		        <option>7</option>
+		        <option>8</option>
+		        <option>9</option>
+		    </select>
+		</div>
+	</form>
+	</div>
+</div>
 <script>
+
+
 	function nextStep() {
-		//step2();
+		step2();
 		var name = document.getElementById("planName").readOnly = true;
 		var days = document.getElementById("amountOfDays").disabled = true;
 		var nextStepBtn = document.getElementById("nextStepBtn").disabled = true;
+		var e = document.getElementById("exerciseSelectList");
+		$.ajax({
+				"url": "http://localhost:8080/GymTrackerTest/api/exercise",
+				"method": "get",
+ 				"success": function(result) {
+					for(var i = 0;i < result.length;i++) {
+						var option = document.createElement("option");
+						option.innerText = result[i].name;
+						option.value = result[i].id;
+						e.appendChild(option);
+					}					
+ 	 			}
+			})
 		
 	}
-
-	/*function step2() {
+	var form = document.getElementById("exercisesForm");
+	function step2() {
 		var form = document.getElementById("form");
 		var formgroup = document.createElement('div');
 		formgroup.classList.add("form-group");
@@ -74,6 +115,8 @@
 	        "<option>5</option>"+
 	        "<option>6</option>"+
 	        "<option>7</option>"+
+	        "<option>8</option>"+
+	        "<option>9</option>"+
 	    "</select>" +
 	    "<button type=\"button\"" +
 		    	"onclick=\"nextStep()\"" +
@@ -92,49 +135,11 @@
 		  "</button>";
 	
         form.appendChild(formgroup);
-
-
-		
-		/*var legend = document.createElement('legend');
-		legend.innerHTML = "Step 2, add exercises</br>";
-				
-		var select = document.createElement('select');
-		select.setAttribute("type", "text");
-		select.setAttribute("name", "exercises")
-		select.setAttribute("placeholder", "Add exercise");
-		select.classList.add("form-control");
-		
-		var submit = document.createElement('button');
-		submit.setAttribute("type", "button");
-		submit.setAttribute("name", "submit");
-		submit.innerHTML = "Add exercise";
-		submit.classList.add("btn");
-		submit.classList.add("btn-primary");
-
-		var cancel = document.createElement('button');
-		cancel.setAttribute("type", "button");
-		cancel.innerHTML = "Back";
-		cancel.classList.add("btn");
-		cancel.classList.add("btn-primary");
-
-		formgroup.appendChild(legend);
-		formgroup.appendChild(select);
-		formgroup.appendChild(submit);
-		formgroup.appendChild(cancel);
-		form.appendChild(formgroup);*/
-		
-//	}
-
-	function cancel() {
-		var name = document.getElementById("planName").readOnly = false;
-		name.value="";
-		var days = document.getElementById("amountOfDays").disabled = false;
-		days.value="";
-		var nextStepBtn = document.getElementById("nextStepBtn").disabled = false;
-		var step2 = document.getElementById("step-2");
-		element.parentNode.removeChild(step2);
 	}
 
+	$.ajax({
+		url: "services"
+	});
 </script>
 </body>
 </html>

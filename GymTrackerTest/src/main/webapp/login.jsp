@@ -13,7 +13,7 @@
 	<div class="container">
 		<div class="row" style="margin-top:40%;">
 			<div class="col-8 offset-2">
-			     <img src="logoblack.png">
+			     <img src="<%= request.getContextPath() %>/static/images/logoblack.png" style="width:100%;">
 				<form method="post" action="login">
 				    <div class="form-group">
 				        <label for="user">Username</label>

@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 
 import org.hibernate.Session;
 
+import entities.Exercise;
+import entities.Plan;
 import services.LoginService;
 import utilities.HibernateUtil;
 import viewmodel.LoginViewModel;
@@ -30,28 +32,26 @@ public class ViewPlansServlet extends HttpServlet {
 		response.setContentType("text/html");
 		
 		HttpSession session = request.getSession(false);
-		System.out.println(session);
+		
 		if (session != null && session.getAttribute("user") != null) {
 			request.getRequestDispatcher("viewplans.jsp").include(request, response);
 			LoginViewModel user = (LoginViewModel) session.getAttribute("user"); 
-			PrintWriter out = response.getWriter();		
+			PrintWriter out = response.getWriter();	
+			
+			System.out.println("creating plans list..");
+			List<Plan> plans = user.selectPlanNames(user.getId());
+
 			out.println("<div class=\"row\">");
-			out.print("<div class=\"col-sm-8 offset-2\">");
-			for (int i = 0; i < user.selectPlanNames().size(); i++) {	
-				
-				//Suspiciously close to the code in the method selectPlanNames, but returns single result instead of entire list.
-				Session s = HibernateUtil.getSessionFactory().openSession();
-				final String HQL_PLAN_NAMES = "SELECT p.id FROM Plan p WHERE p.users = (SELECT id FROM User WHERE username = '" + user.getUsername() + "') AND p.name = '"+user.selectPlanNames().get(i)+ "'";
-				@SuppressWarnings("unchecked")
-				Object result = s.createQuery(HQL_PLAN_NAMES).getSingleResult();
-						
+			out.print("<div class=\"col-sm-8 offset-2\">");  
+			for (int i = 0; i < plans.size(); i++) {	
+
 				out.println(
 					"<div class=\"card text-white bg-secondary mb-3\">"
 				    	+"<div class=\"card-header\">Plan "+ (i+1) +"</div>"
 				    	+"<div class=\"card-body\">" 
-					    	+"<h4 class=\"card-title\">" + user.selectPlanNames().get(i) + "</h4>"
+					    	+"<h4 class=\"card-title\">" + plans.get(i).getName() + "</h4>"
 					    	+"<p class=\"card-text\">Method here that shows the hit muscles.</p>"
-					    	+ "<a href=\"planinfo?id="+result+"\"><button type=\"button\" class=\"btn btn-primary\">Edit plan</button></a>"
+					    	+ "<a href=\"planinfo?id="+ plans.get(i).getId() +"\"><button type=\"button\" class=\"btn btn-primary\">Edit plan</button></a>"
 				    	+"</div>"
 			    	+"</div>"
 				);	

@@ -1,6 +1,12 @@
 package viewmodel;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -9,6 +15,7 @@ import entities.Day;
 import entities.Exercise;
 import entities.Plan;
 import entities.SetInfo;
+import entities.User;
 import utilities.HibernateUtil;
 
 public class LoginViewModel {
@@ -41,9 +48,7 @@ public class LoginViewModel {
 		this.name = name;
 	}
 	
-//	!! IMPORTANT !!
-//	REFACTOR THIS TO USE NAMED PARAMETER INSTEAD
-	public List<PlanInfoViewModel> selectPlanInfoById(String Id) {
+	public List<PlanInfoViewModel> selectPlanInfoById(String Id, String username) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		int id = Integer.parseInt(Id);
 		
@@ -51,28 +56,37 @@ public class LoginViewModel {
 				  "SELECT new viewmodel.PlanInfoViewModel(p.name, p.id, d.dayNr, e.name, si.weight, si.repetitions, p.timesPerWeek) "
 				+ "FROM Day d, SetInfo si, DAY_EXERCISES de, Exercise e, Plan p, User u "
 				+ "WHERE de.day=d.id AND e.id=de.exercises AND si.id=de.sets AND p.id=d.plan AND u.id=p.users "
-				+ "AND u.username = '" + this.getUsername() + "'"
+				+ "AND u.username = :username "
 				+ "AND p.id = :planId" ;
 		
 		Query q = session.createQuery(HQL_SELECT_FULL_PLAN);
 		q.setParameter("planId", id);
+		q.setParameter("username", username);
 		
 		return q.getResultList();
 	}
 	
-//	NOTE:
-//	Is currently needed but are in actuality unnecessary since the data can
-//	be drawn from the selectPlanInfoById method Refactor later
-	public List<String> selectPlanNames() {
+	public List<Plan> selectPlanNames(int id) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
+		CriteriaBuilder cb = session.getCriteriaBuilder();
+		CriteriaQuery<Plan> cq = cb.createQuery(Plan.class);
+		Root<Plan> p = cq.from(Plan.class);
+		cq.select(p);
 		
-		final String HQL_PLAN_NAMES = 
-				"SELECT p.name FROM Plan p " + 
-				"WHERE p.users = (SELECT id FROM User WHERE username = '" + this.getUsername() + "')";
+		TypedQuery<Plan> q = session.createQuery(cq);
+		List<Plan> result = q.getResultList();
 		
-		@SuppressWarnings("unchecked")
-		List<String> result = session.createQuery(HQL_PLAN_NAMES).getResultList();
-		return result;
+		List<Plan> plans = new ArrayList<Plan>();
+		for (int i = 0; i < result.size(); i++) {
+			if (result.get(i).getUsers().getId() == id) {
+				Plan plan = new Plan();
+				plan.setId(result.get(i).getId());
+				plan.setName(result.get(i).getName());
+				plans.add(plan);
+			}
+		}
+		
+		return plans;
 	}
 
 	public int getId() {
