@@ -69,7 +69,15 @@
 	</form>
 	</div>
 </div>
-<div id="exercises"></div>
+<div class="row">
+    <div class="col-12">
+        <form action="" method="post" id="exercises" style="margin:5%;">
+        
+        
+        </form>
+    </div>
+</div>
+    
 <script>
 
 	function goBack() {
@@ -107,14 +115,14 @@
 		var e = document.getElementById("sets");
 		var val = e.options[e.selectedIndex].value;
 		var div = document.createElement('div');
-		console.log(val);
+		div.innerHTML = "";
 		for (var i = 0; i < val; i++) {
 			div.innerHTML += 
 			"<legend>Set "+(i+1)+"</legend>"
 		+	"<label>Weights</label>" 
-		+	"<input type=\"text\" name=\"weights\" placeholder=\"Weights\" class=\"form-control\">"
+		+	"<input type=\"text\" name=\"weights"+(i+1)+"\" placeholder=\"Weights\" class=\"form-control\">"
 		+	"<label>Repetitions</label>"
-		+	"<input type=\"text\" name=\"repetitions\" placeholder=\"Repetitions\" class=\"form-control\">"
+		+	"<input type=\"text\" name=\"repetitions"+(i+1)+"\" placeholder=\"Repetitions\" class=\"form-control\">"
 		}
 		
 		var ex = document.getElementById("exercises");
