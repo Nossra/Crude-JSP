@@ -12,6 +12,7 @@ public class PlanInfoViewModel {
 	public PlanInfoViewModel() {
 		
 	}
+	
 	public PlanInfoViewModel(String planName, int planId) {
 		this.setPlanId(planId);
 		this.setPlanName(planName);
