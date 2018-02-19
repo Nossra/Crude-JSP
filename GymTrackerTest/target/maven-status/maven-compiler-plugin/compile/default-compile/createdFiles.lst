@@ -1,9 +1,11 @@
 exceptions\PlanIsEmptyException.class
 viewmodel\LoginViewModel.class
+api\heroku\Main.class
 utilities\EntityUtil.class
 exceptions\NotFoundSQLException.class
 controller\NewDayServlet.class
 controller\CreatePlanServlet.class
+api\ExerciseController.class
 entities\User.class
 controller\ProfileServlet.class
 entities\Exercise.class

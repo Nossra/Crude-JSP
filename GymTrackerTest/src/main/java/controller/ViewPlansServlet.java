@@ -38,15 +38,14 @@ public class ViewPlansServlet extends HttpServlet {
 			LoginViewModel user = (LoginViewModel) session.getAttribute("user"); 
 			PrintWriter out = response.getWriter();	
 			
-			System.out.println("creating plans list..");
 			List<Plan> plans = user.selectPlanNames(user.getId());
 
 			out.println("<div class=\"row\">");
-			out.print("<div class=\"col-sm-8 offset-2\">");  
+			out.print("<div class=\"col-12\">");
 			for (int i = 0; i < plans.size(); i++) {	
 
 				out.println(
-					"<div class=\"card text-white bg-secondary mb-3\">"
+					"<div class=\"card text-white bg-secondary mb-3\" style=\"margin:5% !important\">"
 				    	+"<div class=\"card-header\">Plan "+ (i+1) +"</div>"
 				    	+"<div class=\"card-body\">" 
 					    	+"<h4 class=\"card-title\">" + plans.get(i).getName() + "</h4>"
