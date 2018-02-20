@@ -34,6 +34,8 @@ public class Plan {
 	@OneToMany(mappedBy = "plan", cascade = CascadeType.ALL)
 	private List<Day> days = new ArrayList<Day>();
 	
+	private static String error;
+	
 	public Plan() {
 		
 	}
@@ -59,13 +61,22 @@ public class Plan {
 		return name;
 	}
 	public void setName(String name) {
-		this.name = name;
+		if (name.length() > 3 && name != null) {
+			this.name = name;
+		} else {
+			this.setError("Plan name is too short");
+		}
+		
 	}
 	public int getTimesPerWeek() {
 		return timesPerWeek;
 	}
 	public void setTimesPerWeek(int timesPerWeek) {
-		this.timesPerWeek = timesPerWeek;
+		if (timesPerWeek > 0 && timesPerWeek < 8) {
+			this.timesPerWeek = timesPerWeek;
+		} else {
+			this.setError("You should really cool it down mate");
+		}
 	}
 
 	public User getUsers() {
@@ -106,6 +117,12 @@ public class Plan {
 		EntityUtil.save(sets);
 		DAY_EXERCISES de = new DAY_EXERCISES(this.selectDays().get(dayNr-1), exercise, sets);		
 		EntityUtil.save(de);
+	}
+	public static String getError() {
+		return error;
+	}
+	public void setError(String error) {
+		this.error = error;
 	}
 	
 	
