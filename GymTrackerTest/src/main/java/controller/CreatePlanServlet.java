@@ -56,10 +56,21 @@ public class CreatePlanServlet extends HttpServlet {
 				.setParameter("id", user.getId())
 				.getSingleResult();
 		
+		int exerciseId = Integer.parseInt(request.getParameter("exerciseSelectList"));
+		int sets = Integer.parseInt(request.getParameter("sets"));
+		
 		Plan p = new Plan(planName, amountOfDays, thisUser);
+		EntityUtil.save(p);
+		for (int i = 0; i < sets; i++) {
+			int repetitions = Integer.parseInt(request.getParameter("repetitions" + (i+1)));
+			double weights = Double.parseDouble(request.getParameter("weights" + (i+1)));
+			p.addExercise(exercise, dayNr, weight, repetitions);
+		}
+		
+		
 
 		
-//		EntityUtil.save(p);
+
 
 		response.sendRedirect("viewplans");
 	}

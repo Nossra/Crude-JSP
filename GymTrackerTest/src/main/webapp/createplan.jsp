@@ -32,7 +32,7 @@
 					<div id="planWarning" style="color:red !important;"></div>
 					<label for="amountOfDays">Amount of days</label>
 					<select class="form-control" name="amountOfDays" id="amountOfDays">
-						<option value="" disabled selected>Select how many times you work out</option>
+						<option disabled selected>Select how many times you work out</option>
 						<option value="1">1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
@@ -59,7 +59,7 @@
 		    </select>
 		    <label for="sets">Amount of sets</label>
 		    <select type="text" name="sets" onchange="createSetFields()" id="sets" placeholder="Amount of sets" class="form-control">
-		        <option value="invalid" disabled selected>Sets for this exercise</option>
+		        <option disabled selected>Sets for this exercise</option>
 		        <option value="1">1</option>
 		        <option value="2">2</option>
 		        <option value="3">3</option>
@@ -89,7 +89,7 @@ function goBack() {
 function step2() {
 	if (planNameLengthValidation()) {
 		if (daysValidation()) {
-			if (planCharacterValidation()) {
+			if (planNameCharacterValidation()) {
 				var step1 = document.getElementById("step1").style = "display: none !important;"
 				var step2 = document.getElementById("step2").style = "display: visible !important;"
 				var e = document.getElementById("exerciseSelectList");
@@ -101,7 +101,7 @@ function step2() {
 							for(var i = 0; i < result.length;i++) {
 								var option = document.createElement("option");
 								option.innerText = result[i].name;
-								option.value = result[i].id;
+								option.value = result[i];
 								e.appendChild(option);
 							}					
 		 	 			}
@@ -132,7 +132,7 @@ function createSetFields() {
 		div.innerHTML += 
 		"<legend>Set "+(i+1)+"</legend>"
 	+	"<label>Weights</label>" 
-	+	"<input type=\"text\" name=\"weight	s"+(i+1)+"\" placeholder=\"Weights\" class=\"form-control\">"
+	+	"<input type=\"text\" name=\"weights"+(i+1)+"\" placeholder=\"Weights\" class=\"form-control\">"
 	+	"<label>Repetitions</label>"
 	+	"<input type=\"text\" name=\"repetitions"+(i+1)+"\" placeholder=\"Repetitions\" class=\"form-control\">"
 	}
@@ -153,13 +153,14 @@ function planNameLengthValidation() {
 	}
 }
 
-function planCharacterValidation() {
+function planNameCharacterValidation() {
+	window.localStorage.clear();
 	var input = document.getElementById("planName").value;
-	var allowed = "abcdefghijklmnopqrstuvwxyzåäöABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ1234567890";
+	var allowed = "abcdefghijklmnopqrstuvwxyzåäöABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ0123456789undefined ";
 
 	for (var i = 0; i < allowed.length; i++) {
-		if (allowed.indexOf(input[i]) != -1) {
-			console.log("input " + allowed[i] + ", found at: " + input.indexOf(allowed[i]));
+		if (allowed.indexOf(input[i]) == -1) {
+			
 			return false;
 		}
 	}
