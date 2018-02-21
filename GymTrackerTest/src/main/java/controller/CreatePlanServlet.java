@@ -41,30 +41,39 @@ public class CreatePlanServlet extends HttpServlet {
 		request.getRequestDispatcher("createplan.jsp").include(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		String planName = request.getParameter("planName");
+		System.out.println("plan name: " + planName);
 		int amountOfDays = Integer.parseInt(request.getParameter("amountOfDays"));
-		
+		System.out.println("days " + amountOfDays);
 		Session s = HibernateUtil.getSessionFactory().openSession();
 		final String HQL_USER = "FROM User u WHERE u.id = :id";
 		@SuppressWarnings("unchecked")
-		User thisUser = (User) s.createQuery(HQL_USER)
+		User thisUser = (User) s.createQuery(HQL_USER)  
 				.setParameter("id", user.getId())
 				.getSingleResult();
-		
-		int exerciseId = Integer.parseInt(request.getParameter("exerciseSelectList"));
-		int sets = Integer.parseInt(request.getParameter("sets"));
-		
+		System.out.println("user id: " + thisUser);
 		Plan p = new Plan(planName, amountOfDays, thisUser);
 		EntityUtil.save(p);
+		
+		int exerciseId = Integer.parseInt(request.getParameter("exerciseSelectList"));
+		final String HQL_PLAN = "FROM Plan WHERE id = :id";
+		Exercise e = (Exercise) s.createQuery(HQL_PLAN)
+				.setParameter("id", exerciseId)
+				.getSingleResult();
+		
+		System.out.println("exercise: " + e);
+		int sets = Integer.parseInt(request.getParameter("sets"));
 		for (int i = 0; i < sets; i++) {
 			int repetitions = Integer.parseInt(request.getParameter("repetitions" + (i+1)));
+			System.out.println("reps: " + repetitions);
+			
 			double weights = Double.parseDouble(request.getParameter("weights" + (i+1)));
-			p.addExercise(exercise, dayNr, weight, repetitions);
+			System.out.println("weights: " + weights);
+			
+			p.addExercise(e, 1, weights, repetitions);
 		}
 		
 		
