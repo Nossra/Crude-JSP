@@ -59,8 +59,9 @@ public class CreatePlanServlet extends HttpServlet {
 		EntityUtil.save(p);
 		
 		int exerciseId = Integer.parseInt(request.getParameter("exerciseSelectList"));
-		final String HQL_PLAN = "FROM Plan WHERE id = :id";
-		Exercise e = (Exercise) s.createQuery(HQL_PLAN)
+		
+		final String HQL_EXERCISE = "FROM Exercise WHERE id = :id";
+		Exercise e = (Exercise) s.createQuery(HQL_EXERCISE)
 				.setParameter("id", exerciseId)
 				.getSingleResult();
 		

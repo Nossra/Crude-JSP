@@ -43,17 +43,18 @@ public class ViewPlansServlet extends HttpServlet {
 			out.println("<div class=\"row\">");
 			out.print("<div class=\"col-12\">");
 			for (int i = 0; i < plans.size(); i++) {	
-
-				out.println(
-					"<div class=\"card text-white bg-secondary mb-3\" style=\"margin:5% !important\">"
-				    	+"<div class=\"card-header\">Plan "+ (i+1) +"</div>"
-				    	+"<div class=\"card-body\">" 
-					    	+"<h4 class=\"card-title\">" + plans.get(i).getName() + "</h4>"
-					    	+"<p class=\"card-text\">Method here that shows the hit muscles.</p>"
-					    	+ "<a href=\"planinfo?id="+ plans.get(i).getId() +"\"><button type=\"button\" class=\"btn btn-primary\">Edit plan</button></a>"
-				    	+"</div>"
-			    	+"</div>"
-				);	
+				if (plans.get(i).getName() != null) {
+					out.println(
+							"<div class=\"card text-white bg-secondary mb-3\" style=\"margin:5% !important\">"
+						    	+"<div class=\"card-header\">Plan "+ (i+1) +"</div>"
+						    	+"<div class=\"card-body\">" 
+							    	+"<h4 class=\"card-title\">" + plans.get(i).getName() + "</h4>"
+							    	+"<p class=\"card-text\">Method here that shows the hit muscles.</p>"
+							    	+ "<a href=\"planinfo?id="+ plans.get(i).getId() +"\"><button type=\"button\" class=\"btn btn-primary\">Edit plan</button></a>"
+						    	+"</div>"
+					    	+"</div>"
+						);
+				}	
 			}
 			out.println("</div>"
 					+ "</div>");
